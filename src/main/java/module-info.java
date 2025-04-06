@@ -16,4 +16,6 @@ module com.aib.walletmanager {
     exports com.aib.walletmanager.views;
     opens com.aib.walletmanager.views to javafx.fxml;
 
+    exports com.aib.walletmanager.model.entities to org.hibernate.orm.core;
+    opens com.aib.walletmanager.model.entities to org.hibernate.orm.core;
 }

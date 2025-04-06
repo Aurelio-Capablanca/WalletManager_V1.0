@@ -1,6 +1,8 @@
 package com.aib.walletmanager;
 
 import com.aib.walletmanager.connectorFactory.Connector;
+import com.aib.walletmanager.model.entities.Users;
+import com.aib.walletmanager.repository.UsersRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,5 +25,12 @@ public class WalletApp extends Application {
         Connector connector = Connector.getInstance();
         connector.getSession(connector.getMainSession());
         System.out.println("ISOpen : "+connector.getMainSession().isOpen());
+
+        Users user = Users.builder().nameUser("Aurelius").lastNameUser("Capablanca")
+                .passUser("tester").statusUser(true)
+                .emailUser("aurel@mail.com").build();
+
+        UsersRepository repository = new UsersRepository();
+        repository.save(user);
     }
 }

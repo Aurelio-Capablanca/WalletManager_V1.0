@@ -1,5 +1,7 @@
 package com.aib.walletmanager.connectorFactory;
 
+import com.aib.walletmanager.model.entities.Users;
+import com.aib.walletmanager.model.entities.Wallets;
 import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class Connector {
@@ -20,7 +22,7 @@ public class Connector {
     private final SessionFactory mainSession;
 
     public Connector() {
-        mainSession = builderForSession(Collections.emptyList());
+        mainSession = builderForSession(Arrays.asList(Users.class, Wallets.class));
     }
 
     public static Connector getInstance() {
