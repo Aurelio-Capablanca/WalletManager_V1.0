@@ -1,7 +1,6 @@
 package com.aib.walletmanager.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -13,13 +12,12 @@ import lombok.*;
 @Builder
 public class WalletCategories {
 
-    /*
-    create table WalletCategories(
-idWalletCategory int primary key identity(1,1),
-CategoryName varchar(30) not null
-)
-    */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idWalletCategory")
+    private Integer idWalletCategory;
 
-    
+    @Column(name = "CategoryName")
+    private String categoryWallet;
 
 }

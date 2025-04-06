@@ -4,6 +4,8 @@ package com.aib.walletmanager.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "Wallet")
 @Getter
@@ -22,7 +24,7 @@ public class Wallets {
     private String codeWallet;
 
     @Column(name = "balanceWallet")
-    private Double balanceWallet;
+    private BigDecimal balanceWallet;
 
     @Column(name = "idUser")
     private Integer idUser;
