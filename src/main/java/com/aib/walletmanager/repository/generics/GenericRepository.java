@@ -19,7 +19,7 @@ public class GenericRepository<T, ID> {
         this.entity = entity;
     }
 
-    public void save(T entity) {
+    public final void save(T entity) {
         Transaction transaction = null;
         try (Session session = sessionConnector.getMainSession().openSession()) {
             transaction = session.beginTransaction();
@@ -38,7 +38,7 @@ public class GenericRepository<T, ID> {
         }
     }
 
-    public void saveAll(Collection<T> collection) {
+    public final void saveAll(Collection<T> collection) {
         Transaction transaction = null;
         try (Session session = sessionConnector.getMainSession().openSession()) {
             transaction = session.beginTransaction();
@@ -65,7 +65,7 @@ public class GenericRepository<T, ID> {
         }
     }
 
-    public List<T> findAll() {
+    public final List<T> findAll() {
         try (Session session = sessionConnector.getMainSession().openSession()) {
             return session.createQuery("from " + entity.getName(), entity).list();
         }

@@ -78,11 +78,17 @@
             <version>1.18.36</version>
             <scope>provided</scope>
         </dependency>
-        <!--        -->
+        <!--Hikari Pool-->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>5.1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.password4j/password4j -->
+        <dependency>
+            <groupId>com.password4j</groupId>
+            <artifactId>password4j</artifactId>
+            <version>1.8.2</version>
         </dependency>
     </dependencies>
     <build>
