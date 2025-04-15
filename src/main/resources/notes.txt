@@ -1,0 +1,10 @@
+JavaFX and implementation of Hibernate for SQL Server connection.
+
+
+1- Login --Working
+2- Hibernate Implementation --Done
+3- Forms designing --Working
+4- Data management (usage of Repository and Validation Objects) and CRUD --Done
+
+
+

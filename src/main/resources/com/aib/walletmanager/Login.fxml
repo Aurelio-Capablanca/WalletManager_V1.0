@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="551.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.LoginController">
-
+<AnchorPane prefHeight="551.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.LoginController">
+   <children>
+      <Label layoutX="75.0" layoutY="141.0" text="User Name" />
+      <TextField fx:id="txtUser" layoutX="75.0" layoutY="171.0" />
+      <PasswordField fx:id="txtPass" layoutX="75.0" layoutY="242.0" />
+      <Label layoutX="75.0" layoutY="217.0" text="Password" />
+      <SplitPane dividerPositions="0.6879699248120301" layoutX="-5.0" orientation="VERTICAL" prefHeight="108.0" prefWidth="318.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label layoutX="31.0" layoutY="27.0" text="Sign In" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+        </items>
+      </SplitPane>
+      <Button fx:id="btnSignIn" layoutX="95.0" layoutY="337.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="123.0" text="Sign In" />
+   </children>
 </AnchorPane>

@@ -14,12 +14,12 @@ import org.hibernate.service.ServiceRegistry;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class Connector {
 
     private static volatile Connector instance;
 
-    @Getter
-    private final SessionFactory mainSession;
+    public final SessionFactory mainSession;
 
     public Connector() {
         mainSession = builderForSession(Arrays.asList(Users.class, Wallets.class));

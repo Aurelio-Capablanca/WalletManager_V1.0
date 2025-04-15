@@ -10,6 +10,7 @@ module com.aib.walletmanager {
     requires com.microsoft.sqlserver.jdbc;
     requires static lombok;
     requires jakarta.persistence;
+    requires password4j;
 
     opens com.aib.walletmanager to javafx.fxml;
     exports com.aib.walletmanager;
