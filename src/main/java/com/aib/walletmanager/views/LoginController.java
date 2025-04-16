@@ -1,5 +1,6 @@
 package com.aib.walletmanager.views;
 
+import com.aib.walletmanager.business.logic.AuthenticationLogic;
 import com.aib.walletmanager.business.persistence.UserPersistence;
 import com.aib.walletmanager.model.entities.Users;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    AuthenticationLogic authenticationLogic = new AuthenticationLogic();
 
     @FXML
     private Button btnSignIn;
@@ -31,6 +33,7 @@ public class LoginController implements Initializable {
 
         btnSignIn.setOnAction(actionEvent -> {
             System.out.println("Trigger !!");
+            authenticationLogic.authenticateUser(txtUser.getText(), txtPass.getText());
         });
     }
 

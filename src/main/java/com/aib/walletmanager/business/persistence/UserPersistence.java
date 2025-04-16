@@ -13,8 +13,8 @@ public class UserPersistence {
     private final UsersRepository repository = new UsersRepository();
     private final BcryptFunction encryption = BcryptFunction.getInstance(Bcrypt.B, 12);
 
-    public void authenticateUser() {
-
+    public String getUserPassword(String email){
+        return repository.findUserPassword(email);
     }
 
     public void saveUsers(Users value) {

@@ -79,15 +79,26 @@ public class Connector {
         return data.buildSessionFactory();
     }
 
-    public Session getSession(SessionFactory factory) {
+    public Session getSessionByFactory(SessionFactory factory) {
         if (factory == null)
             throw new IllegalStateException("The session can't be made");
         return factory.openSession();
     }
 
-    public void shutdown(SessionFactory factory) {
+    public Session getSession() {
+        if (mainSession == null)
+            throw new IllegalStateException("The session can't be made");
+        return mainSession.openSession();
+    }
+
+    public void shutdownByFactory(SessionFactory factory) {
         if (factory != null)
             factory.close();
+    }
+
+    public void shutdown() {
+        if (mainSession != null)
+            mainSession.close();
     }
 
 }
