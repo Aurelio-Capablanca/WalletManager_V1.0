@@ -3,6 +3,7 @@ package com.aib.walletmanager.views;
 import com.aib.walletmanager.model.dataHolders.UserSessionSignature;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.net.URL;
@@ -15,6 +16,14 @@ public class DashboardController implements Initializable {
     Label lblUserName;
     @FXML
     Label lblUserBalance;
+    @FXML
+    Button btnLogout;
+    @FXML
+    Button btnHistoric;
+    @FXML
+    Button btnManagement;
+    @FXML
+    Button btnInOut;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -25,4 +34,5 @@ public class DashboardController implements Initializable {
         DecimalFormat formatDecimals = new DecimalFormat("####.00");
         lblUserBalance.setText(signature.getWalletsInstance().getIdWallet() == null ? "No Data in the System" : formatDecimals.format(signature.getWalletsInstance().getBalanceWallet()));
     }
+
 }

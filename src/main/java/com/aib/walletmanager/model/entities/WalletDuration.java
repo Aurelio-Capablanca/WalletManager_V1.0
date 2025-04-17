@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class DurationCategories {
+public class WalletDuration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,5 @@ public class DurationCategories {
 
     @Column(name = "durationTimeset")
     private String timeSet;
-
 
 }

@@ -44,7 +44,7 @@ public class WalletOrganizations {
     private Integer idWalletCategory;
 
     @Column(name = "idDuration")
-    private Integer idDuration;
+    private Integer idTimeSet;
 
     @Column(name = "idWallet")
     private Integer idWallet;

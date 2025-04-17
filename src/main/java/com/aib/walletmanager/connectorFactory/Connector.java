@@ -1,7 +1,6 @@
 package com.aib.walletmanager.connectorFactory;
 
-import com.aib.walletmanager.model.entities.Users;
-import com.aib.walletmanager.model.entities.Wallets;
+import com.aib.walletmanager.model.entities.*;
 import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,8 +20,11 @@ public class Connector {
 
     public final SessionFactory mainSession;
 
-    public Connector() {
-        mainSession = builderForSession(Arrays.asList(Users.class, Wallets.class));
+    private Connector() {
+        mainSession = builderForSession(Arrays.asList(Users.class, Wallets.class, CategoryOutcomes.class,
+                Incomes.class, Outcomes.class, SavesHistorics.class, TypeIncomes.class, WalletBudgets.class,
+                WalletCategories.class, WalletDuration.class, WalletHistory.class, WalletCategories.class
+        ));
     }
 
     public static Connector getInstance() {
