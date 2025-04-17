@@ -1,6 +1,7 @@
 package com.aib.walletmanager.repository.generics;
 
 import com.aib.walletmanager.connectorFactory.Connector;
+import jakarta.persistence.NoResultException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,6 +10,7 @@ import org.hibernate.TransactionException;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class GenericRepository<T, ID> {
 
@@ -68,6 +70,29 @@ public class GenericRepository<T, ID> {
     public final List<T> findAll() {
         try (Session session = sessionConnector.getMainSession().openSession()) {
             return session.createQuery("from " + entity.getName(), entity).list();
+        }
+    }
+
+    public final Optional<T> findByStringAttribute(String attributeName, String value) {
+        try (Session session = sessionConnector.getMainSession().openSession()) {
+            T result = session.createQuery("from " + entity.getName() + " where " + attributeName + " =  :" + attributeName, entity).setParameter(attributeName, value).getSingleResult();
+            return Optional.ofNullable(result);
+
+        } catch (NoResultException e) {
+            //e.printStackTrace();
+            System.out.println("No Results Found This is not an error : " + e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    public final Optional<T> findByIntegerAttribute(String attributeName, Integer value) {
+        try (Session session = sessionConnector.getMainSession().openSession()) {
+            T result = session.createQuery("from " + entity.getName() + " where " + attributeName + " =  :" + attributeName, entity).setParameter(attributeName, value).getSingleResult();
+            return Optional.ofNullable(result);
+        } catch (NoResultException e) {
+            //e.printStackTrace();
+            System.out.println("No Results Found This is not an error : " + e.getMessage());
+            return Optional.empty();
         }
     }
 

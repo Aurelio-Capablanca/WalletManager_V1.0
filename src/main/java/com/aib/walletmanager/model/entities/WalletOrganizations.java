@@ -34,10 +34,10 @@ public class WalletOrganizations {
     @Column(name = "creationOrganization")
     private LocalDateTime creationOrganization;
 
-    @Column(name = "startDuration")
+    @Column(name = "startPeriod")
     private LocalDateTime startDuration;
 
-    @Column(name = "endDuration")
+    @Column(name = "endPeriod")
     private LocalDateTime endDuration;
 
     @Column(name = "idWalletCategory")

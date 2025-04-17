@@ -23,5 +23,8 @@ public class UserPersistence {
         repository.save(value);
     }
 
+    public Users getUserByEmail(String email){
+        return repository.findByStringAttribute("emailUser",email).orElse(Users.builder().build());
+    }
 
 }

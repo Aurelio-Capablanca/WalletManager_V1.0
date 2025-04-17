@@ -1,40 +1,15 @@
 JavaFX and implementation of Hibernate for SQL Server connection.
 
 
-1- Login --Working
+1- Login --Done
 2- Hibernate Implementation --Done
 3- Forms designing --Working
 4- Data management (usage of Repository and Validation Objects) and CRUD --Done
 
 
-
-/*
- String sql = "SELECT * FROM users WHERE name = :name AND age > :age";
-
-    Query query = entityManager.createNativeQuery(sql);
-    query.setParameter("name", nameParam);
-    query.setParameter("age", ageParam);
-
-    List<Object[]> resultList = query.getResultList();
-    return resultList;
-
-
-    public void doSomething() {
-            entityManager.getTransaction().begin();
-            // your query logic
-            entityManager.getTransaction().commit();
-    }
-
-
-    boolean verified =
-    Password
-    .check("my password",
-     "$2b$12$.z6oEtf4KGlPk9y4uzEsKuF.4MfAv9NQCrqXQevjYy0DMvVXZWcK2")
-    .addPepper("shared-secret")
-    .with(bcrypt);
-
-    List<Object[]> results = session.createNativeQuery(
-        "SELECT * FROM wallets WHERE user_id = :uid")
-        .setParameter("uid", userId)
-        .getResultList();
-*/
+-> Following
+  - Do a Singleton for contain the data bucket of the logged User
+  - Do Dashboard Form
+  - Make queries call and fill with mock data (Just SQL)
+  - Do Budget Management Form and Transactional Queries
+  - Do Incomes and Outcomes and wrap on the transactions the history recording

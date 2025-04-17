@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane fx:id="lblBalance" prefHeight="556.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.DashboardController">
+   <children>
+      <Label graphicTextGap="7.0" layoutX="145.0" layoutY="100.0" text="Welcome : ">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblUserName" layoutX="337.0" layoutY="100.0" text="{User Name}">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="185.0" layoutY="161.0" text="Your Balance : ">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblUserBalance" layoutX="433.0" layoutY="161.0" text="{Your Balance}">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
