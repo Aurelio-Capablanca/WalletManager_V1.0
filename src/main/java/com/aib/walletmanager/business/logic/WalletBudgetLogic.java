@@ -21,5 +21,7 @@ public class WalletBudgetLogic {
                 session -> budgetPersistence.saveComposition(WalletBudgets.builder().idOrganizer(item.getIdWalletOrganization()).idWallet(item.getIdWallet()).build(), session)));
     }
 
-
+    public List<WalletOrganizations> findAll(){
+        return organizationPersistence.getAll();
+    }
 }

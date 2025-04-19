@@ -46,7 +46,9 @@ public class ManagementBudgetsController implements Initializable {
     @FXML
     Label lblBalanceTotal;
     @FXML
-    ListView<String> ltvEditables;
+    ListView<WalletOrganizations> ltvEditables;
+
+    final WalletBudgetLogic budgetLogic = new WalletBudgetLogic();
 
 
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
@@ -56,7 +58,6 @@ public class ManagementBudgetsController implements Initializable {
         lblBalanceTotal.setText(signature.getWalletsInstance().getBalanceWallet().toString());
         cmbCategory.setItems(FXCollections.observableList(signature.getWalletCategories()));
         cmbRepetition.setItems(FXCollections.observableList(signature.getWalletDurations()));
-
         cmbCategory.setConverter(new StringConverter<WalletCategories>() {
             @Override
             public String toString(WalletCategories walletCategories) {
@@ -68,7 +69,6 @@ public class ManagementBudgetsController implements Initializable {
                 return cmbCategory.getItems().stream().filter(values -> values.getCategoryWallet().equalsIgnoreCase(s)).findFirst().orElse(null);
             }
         });
-
         cmbRepetition.setConverter(new StringConverter<WalletDuration>() {
             @Override
             public String toString(WalletDuration walletDuration) {
@@ -80,13 +80,11 @@ public class ManagementBudgetsController implements Initializable {
                 return cmbRepetition.getItems().stream().filter(value -> value.getTimeSet().equalsIgnoreCase(s)).findFirst().orElse(null);
             }
         });
-
         txtAmount.textProperty().addListener((obs, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
                 txtAmount.setText(oldValue); // block invalid input
             }
         });
-
         txtAmount.focusedProperty().addListener((observable, newValue, oldValue) -> {
             if (!newValue) {
                 // Gained focus
@@ -120,8 +118,19 @@ public class ManagementBudgetsController implements Initializable {
                     .idWallet(signature.getWalletsInstance().getIdWallet())
                     .build();
             System.out.println("Object to save : " + orgObject);
-            WalletBudgetLogic budgetLogic = new WalletBudgetLogic();
             budgetLogic.saveBudgets(orgObject);
+        });
+        ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
+        ltvEditables.setCellFactory(parameters -> new ListCell<WalletOrganizations>() {
+            @Override
+            protected void updateItem(WalletOrganizations item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getOrganizationName() + " - " + item.getBudgetAssigned() + "$ - " + item.getPercentageFromWallet() + " %");
+                }
+            }
         });
     }
 
