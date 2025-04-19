@@ -40,6 +40,21 @@ public class GenericRepository<T, ID> {
         }
     }
 
+    public final void saveWithoutTransaction(T entity, Session session) {
+//        try (Session session = sessionConnector.getMainSession().openSession()) {
+//
+//        } catch (TransactionException e) {
+//            e.printStackTrace();
+//        }
+        Object id = getEntityId(entity);
+        if (id == null) {
+            session.persist(entity);
+        } else {
+            session.merge(entity);
+        }
+    }
+
+
     public final void saveAll(Collection<T> collection) {
         Transaction transaction = null;
         try (Session session = sessionConnector.getMainSession().openSession()) {

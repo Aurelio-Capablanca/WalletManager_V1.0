@@ -12,16 +12,23 @@ import java.util.function.Consumer;
 @AllArgsConstructor
 public class TransactionWrapper {
 
-    private final Connector connector;
+    private final Connector connector = Connector.getInstance();
 
     public <T> void executeTransaction(List<Consumer<Session>> transactions) {
         Transaction current = null;
         try (Session session = connector.getMainSession().openSession()) {
             current = session.beginTransaction();
-            transactions.forEach(transaction -> transaction.accept(session));
+            transactions.forEach(transaction -> {
+                try {
+                    transaction.accept(session);
+                } catch (Exception e) {
+                    System.err.println("Error during transaction lambda execution: " + e.getMessage());
+                    throw e;
+                }
+            });
             current.commit();
         } catch (Exception e) {
-            if (current != null)
+            if (current != null && current.getStatus().canRollback())
                 current.rollback();
             throw new RuntimeException(e);
         }

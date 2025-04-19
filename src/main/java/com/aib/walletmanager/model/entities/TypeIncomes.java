@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@ToString
 public class TypeIncomes {
 
     @Id

@@ -23,7 +23,7 @@ public class Connector {
     private Connector() {
         mainSession = builderForSession(Arrays.asList(Users.class, Wallets.class, CategoryOutcomes.class,
                 Incomes.class, Outcomes.class, SavesHistorics.class, TypeIncomes.class, WalletBudgets.class,
-                WalletCategories.class, WalletDuration.class, WalletHistory.class, WalletCategories.class
+                WalletCategories.class, WalletDuration.class, WalletHistory.class, WalletCategories.class, WalletOrganizations.class
         ));
     }
 

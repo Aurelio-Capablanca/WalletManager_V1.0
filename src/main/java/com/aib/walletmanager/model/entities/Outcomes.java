@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
+@ToString
 public class Outcomes {
 
     @Id
