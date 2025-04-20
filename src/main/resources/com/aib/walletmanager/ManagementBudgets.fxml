@@ -62,13 +62,8 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Label layoutX="504.0" layoutY="92.0" text="\$">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
       <ListView fx:id="ltvEditables" layoutX="660.0" layoutY="141.0" prefHeight="382.0" prefWidth="294.0" />
-      <Button layoutX="678.0" layoutY="92.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="755.0" layoutY="92.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="btnUpdate" layoutX="678.0" layoutY="92.0" mnemonicParsing="false" text="Update" />
+      <Button fx:id="btnDelete" layoutX="755.0" layoutY="92.0" mnemonicParsing="false" text="Delete" />
    </children>
 </AnchorPane>

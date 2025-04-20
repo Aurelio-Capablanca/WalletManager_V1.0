@@ -4,6 +4,7 @@ import com.aib.walletmanager.WalletApp;
 import com.aib.walletmanager.business.logic.AuthenticationLogic;
 import com.aib.walletmanager.business.logic.UserLogic;
 import com.aib.walletmanager.business.persistence.UserPersistence;
+import com.aib.walletmanager.business.rules.UIActions;
 import com.aib.walletmanager.model.entities.Users;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -37,22 +38,7 @@ public class LoginController implements Initializable {
             System.out.println("Trigger !!");
             final Boolean access = authenticationLogic.authenticateUser(txtUser.getText(), txtPass.getText());
             if (access) {
-                Platform.runLater(()->{
-                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                    currentStage.close();
-                    FXMLLoader fxmlLoader = new FXMLLoader(WalletApp.class.getResource("Dashboard.fxml"));
-                    Scene scene;
-                    try {
-                        scene = new Scene(fxmlLoader.load());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Stage newStage = new Stage();
-                    newStage.setTitle("Dashboard");
-                    newStage.setScene(scene);
-                    newStage.show();
-                });
-
+                UIActions.setNewStage(actionEvent, "Dashboard.fxml", "Dashboard");
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.aib.walletmanager.views;
 
 import com.aib.walletmanager.business.logic.WalletBudgetLogic;
+import com.aib.walletmanager.business.rules.UIActions;
 import com.aib.walletmanager.model.dataHolders.UserSessionSignature;
 import com.aib.walletmanager.model.entities.WalletCategories;
 import com.aib.walletmanager.model.entities.WalletDuration;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ManagementBudgetsController implements Initializable {
@@ -25,6 +27,8 @@ public class ManagementBudgetsController implements Initializable {
     Button btnLogout;
     @FXML
     Button btnCreate;
+    @FXML
+    Button btnUpdate;
     @FXML
     Button btnCancel;
 
@@ -42,22 +46,24 @@ public class ManagementBudgetsController implements Initializable {
     ComboBox<WalletCategories> cmbCategory;
     @FXML
     TextField txtName;
-
     @FXML
     Label lblBalanceTotal;
     @FXML
     ListView<WalletOrganizations> ltvEditables;
 
-    final WalletBudgetLogic budgetLogic = new WalletBudgetLogic();
-
-
+    private final WalletBudgetLogic budgetLogic = new WalletBudgetLogic();
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
+    private WalletOrganizations selectedValue;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lblBalanceTotal.setText(signature.getWalletsInstance().getBalanceWallet().toString());
+        lblBalanceTotal.setText(signature.getWalletsInstance().getBalanceWallet().toString() + " $");
+        ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
         cmbCategory.setItems(FXCollections.observableList(signature.getWalletCategories()));
         cmbRepetition.setItems(FXCollections.observableList(signature.getWalletDurations()));
+        txtPercentage.setDisable(true);
+        btnReturn.setOnAction(actionEvent -> UIActions.setNewStage(actionEvent, "Dashboard.fxml", "Dashboard"));
         cmbCategory.setConverter(new StringConverter<WalletCategories>() {
             @Override
             public String toString(WalletCategories walletCategories) {
@@ -98,29 +104,13 @@ public class ManagementBudgetsController implements Initializable {
             }
         });
         btnCreate.setOnAction(actionEvent -> {
-            System.out.println(cmbCategory.getSelectionModel().getSelectedIndex());
-            System.out.println(cmbRepetition.getSelectionModel().getSelectedIndex());
-            Integer selectedCategory = 0;
-            Integer selectedTime = 0;
-            if (cmbCategory.getSelectionModel().getSelectedIndex() != -1)
-                selectedCategory = cmbCategory.getItems().get(cmbCategory.getSelectionModel().getSelectedIndex()).getIdWalletCategory();
-            if (cmbRepetition.getSelectionModel().getSelectedIndex() != -1)
-                selectedTime = cmbRepetition.getItems().get(cmbRepetition.getSelectionModel().getSelectedIndex()).getIdDuration();
-            WalletOrganizations orgObject = WalletOrganizations.builder()
-                    .organizationName(txtName.getText())
-                    .budgetAssigned(new BigDecimal(txtAmount.getText()))
-                    .percentageFromWallet(Double.valueOf(txtPercentage.getText()))
-                    .creationOrganization(LocalDateTime.now())
-                    .idTimeSet(selectedTime)
-                    .idWalletCategory(selectedCategory)
-                    .startDuration(dpStart.getValue() == null ? null : dpStart.getValue().atStartOfDay())
-                    .endDuration(dpEnd.getValue() == null ? null : dpEnd.getValue().atStartOfDay())
-                    .idWallet(signature.getWalletsInstance().getIdWallet())
-                    .build();
+            WalletOrganizations orgObject = objectComposition(null);
             System.out.println("Object to save : " + orgObject);
             budgetLogic.saveBudgets(orgObject);
+            ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
+            cleanBudgetForms();
         });
-        ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
+
         ltvEditables.setCellFactory(parameters -> new ListCell<WalletOrganizations>() {
             @Override
             protected void updateItem(WalletOrganizations item, boolean empty) {
@@ -132,7 +122,79 @@ public class ManagementBudgetsController implements Initializable {
                 }
             }
         });
+        ltvEditables.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
+            System.out.println("New Value :" + newValue + " \n Old Value :" + oldValue);
+            selectedValue = newValue == null ? oldValue : newValue;
+            DecomposeObject(selectedValue);
+        }));
+        btnUpdate.setOnAction(actionEvent -> {
+            System.out.println("currentSelection : " + selectedValue);
+            WalletOrganizations orgObject = objectComposition(selectedValue.getIdWalletOrganization());
+            System.out.println("Object to save : " + orgObject);
+            budgetLogic.saveBudgets(orgObject);
+            ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
+            cleanBudgetForms();
+        });
     }
 
+    private void cleanBudgetForms() {
+        UIActions.cleanUIForms(txtName);
+        UIActions.cleanUIForms(txtAmount);
+        UIActions.cleanUIForms(txtPercentage);
+        UIActions.cleanUIForms(dpEnd);
+        UIActions.cleanUIForms(dpStart);
+        UIActions.cleanUIForms(cmbRepetition);
+        UIActions.cleanUIForms(cmbCategory);
+    }
+
+    private void DecomposeObject(WalletOrganizations item) {
+//        cmbCategory.getItems().forEach(values -> {
+//            System.out.println(signature.getWalletCategories().get(item.getIdWalletCategory()).getIdWalletCategory());
+//
+//            if (Objects.equals(values.getIdWalletCategory(), signature.getWalletCategories().get(item.getIdWalletCategory()).getIdWalletCategory())) {
+//                cmbCategory.setValue(signature.getWalletCategories().get(item.getIdWalletCategory()));
+//            }
+//        });
+//        cmbRepetition.getItems().forEach(values -> {
+//            System.out.println(signature.getWalletDurations().get(item.getIdTimeSet()).getIdDuration());
+//            if(Objects.equals(values.getIdDuration(), signature.getWalletDurations().get(item.getIdTimeSet()).getIdDuration())){
+//                cmbRepetition.setValue(signature.getWalletDurations().get(item.getIdTimeSet()));
+//            }
+//        });
+        cmbCategory.getItems().stream()
+                .filter(cat -> Objects.equals(cat.getIdWalletCategory(), item.getIdWalletCategory()))
+                .findFirst()
+                .ifPresent(cmbCategory::setValue);
+        cmbRepetition.getItems().stream()
+                .filter(dur -> Objects.equals(dur.getIdDuration(), item.getIdTimeSet()))
+                .findFirst()
+                .ifPresent(cmbRepetition::setValue);
+        txtName.setText(item.getOrganizationName());
+        txtAmount.setText(item.getBudgetAssigned().toString());
+        txtPercentage.setText(item.getPercentageFromWallet().toString());
+        dpEnd.setValue(item.getEndDuration() == null ? null : item.getEndDuration().toLocalDate());
+        dpStart.setValue(item.getStartDuration() == null ? null : item.getStartDuration().toLocalDate());
+    }
+
+    private WalletOrganizations objectComposition(Integer id) {
+        Integer selectedCategory = 0;
+        Integer selectedTime = 0;
+        if (cmbCategory.getSelectionModel().getSelectedIndex() != -1)
+            selectedCategory = cmbCategory.getItems().get(cmbCategory.getSelectionModel().getSelectedIndex()).getIdWalletCategory();
+        if (cmbRepetition.getSelectionModel().getSelectedIndex() != -1)
+            selectedTime = cmbRepetition.getItems().get(cmbRepetition.getSelectionModel().getSelectedIndex()).getIdDuration();
+        return WalletOrganizations.builder()
+                .idWalletOrganization(id)
+                .organizationName(txtName.getText())
+                .budgetAssigned(new BigDecimal(txtAmount.getText()))
+                .percentageFromWallet(Double.valueOf(txtPercentage.getText()))
+                .creationOrganization(LocalDateTime.now())
+                .idTimeSet(selectedTime)
+                .idWalletCategory(selectedCategory)
+                .startDuration(dpStart.getValue() == null ? null : dpStart.getValue().atStartOfDay())
+                .endDuration(dpEnd.getValue() == null ? null : dpEnd.getValue().atStartOfDay())
+                .idWallet(signature.getWalletsInstance().getIdWallet())
+                .build();
+    }
 
 }

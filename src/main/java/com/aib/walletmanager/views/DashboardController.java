@@ -1,6 +1,7 @@
 package com.aib.walletmanager.views;
 
 import com.aib.walletmanager.WalletApp;
+import com.aib.walletmanager.business.rules.UIActions;
 import com.aib.walletmanager.model.dataHolders.UserSessionSignature;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -40,23 +41,8 @@ public class DashboardController implements Initializable {
                 .append(signature.getUsersInstance().getLastNameUser()).toString());
         DecimalFormat formatDecimals = new DecimalFormat("####.00");
         lblUserBalance.setText(signature.getWalletsInstance().getIdWallet() == null ? "No Data in the System" : formatDecimals.format(signature.getWalletsInstance().getBalanceWallet()));
-
         btnManagement.setOnAction(actionEvent ->
-                Platform.runLater(() -> {
-                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                    currentStage.close();
-                    FXMLLoader fxmlLoader = new FXMLLoader(WalletApp.class.getResource("ManagementBudgets.fxml"));
-                    Scene scene;
-                    try {
-                        scene = new Scene(fxmlLoader.load());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Stage newStage = new Stage();
-                    newStage.setTitle("Budget Management");
-                    newStage.setScene(scene);
-                    newStage.show();
-                })
+                        UIActions.setNewStage(actionEvent, "ManagementBudgets.fxml", "Budget Management")
         );
 
 
