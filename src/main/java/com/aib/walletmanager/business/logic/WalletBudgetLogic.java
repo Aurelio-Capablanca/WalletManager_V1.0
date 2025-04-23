@@ -21,7 +21,17 @@ public class WalletBudgetLogic {
                 session -> budgetPersistence.saveComposition(WalletBudgets.builder().idOrganizer(item.getIdWalletOrganization()).idWallet(item.getIdWallet()).build(), session)));
     }
 
-    public List<WalletOrganizations> findAll(){
+    public List<WalletOrganizations> findAll() {
         return organizationPersistence.getAll();
     }
+
+    public void deleteEntities(WalletOrganizations item) {
+        List<WalletBudgets> budgets = budgetPersistence.getRelatedToAnOrg(item.getIdWallet(), item.getIdWalletOrganization());
+        if (!budgets.isEmpty()) {
+            wrapper.executeTransaction(List.of(
+                    session -> budgetPersistence.deleteAll(budgets, session),
+                    session -> organizationPersistence.deleteUnit(item, session)));
+        }
+    }
+
 }

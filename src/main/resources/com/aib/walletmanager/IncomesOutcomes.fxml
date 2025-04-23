@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.aib.walletmanager.views.IncomesOutcomesController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="606.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.IncomesOutcomesController">
+   <children>
+      <Button fx:id="btnReturn" layoutX="38.0" layoutY="33.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="98.0" text="Return" />
+      <Button fx:id="btnLogout" layoutX="842.0" layoutY="29.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="107.0" text="Log Out" />
+      <TreeView fx:id="treeView" layoutX="544.0" layoutY="93.0" prefHeight="439.0" prefWidth="284.0" />
+      <Label layoutX="108.0" layoutY="181.0" text="Amount">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="108.0" layoutY="223.0" text="Category">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbCategory" layoutX="208.0" layoutY="224.0" prefWidth="150.0" />
+      <TextField fx:id="txtAmount" layoutX="209.0" layoutY="182.0" />
+      <RadioButton fx:id="rdbOutcomeActivation" layoutX="218.0" layoutY="84.0" mnemonicParsing="false" text="Is Outcome" />
+      <Button fx:id="btnSave" layoutX="168.0" layoutY="460.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="82.0" text="Save" />
+      <Button fx:id="btnCancel" layoutX="333.0" layoutY="460.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="82.0" text="Cancel" />
+      <Label layoutX="108.0" layoutY="266.0" text="Motive">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txaMotive" layoutX="209.0" layoutY="258.0" prefHeight="79.0" prefWidth="150.0" />
+   </children>
 </AnchorPane>

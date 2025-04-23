@@ -1,7 +1,6 @@
 package com.aib.walletmanager.business.persistence;
 
 import com.aib.walletmanager.model.entities.WalletBudgets;
-import com.aib.walletmanager.model.entities.WalletOrganizations;
 import com.aib.walletmanager.repository.WalletBudgetsRepository;
 import org.hibernate.Session;
 
@@ -11,8 +10,20 @@ public class WalletBudgetsPersistence {
 
     private final WalletBudgetsRepository repository = new WalletBudgetsRepository();
 
-    public void saveComposition(WalletBudgets items, Session session){
+    public void saveComposition(WalletBudgets items, Session session) {
         repository.saveWithoutTransaction(items, session);
+    }
+
+    public List<WalletBudgets> getRelatedToAnOrg(Integer idWallet, Integer idOrganization) {
+        return repository.getRelatedToAnOrg(idWallet, idOrganization);
+    }
+
+    public void delete(WalletBudgets item, Session session) {
+        repository.deleteWithoutTransaction(item, session);
+    }
+
+    public void deleteAll(List<WalletBudgets> items, Session session){
+        repository.deleteAllWithoutTransaction(items, session);
     }
 
 }

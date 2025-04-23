@@ -14,4 +14,6 @@ public class WalletLogic {
         return walletPersistence.getWalletByUserId(idUser);
     }
 
+
+
 }

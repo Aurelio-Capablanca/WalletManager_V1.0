@@ -27,6 +27,9 @@ public class Outcomes {
     @Column(name = "OutcomeAmount")
     private BigDecimal OutcomeAmount;
 
+    @Column(name = "Motive")
+    private String motiveMovement;
+
     @Column(name = "idWallet")
     private Integer idWallet;
 

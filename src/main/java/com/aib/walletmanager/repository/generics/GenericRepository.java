@@ -25,7 +25,7 @@ public class GenericRepository<T, ID> {
         Transaction transaction = null;
         try (Session session = sessionConnector.getMainSession().openSession()) {
             transaction = session.beginTransaction();
-            Object id = getEntityId(entity);
+            final Object id = getEntityId(entity);
             if (id == null) {
                 session.persist(entity);
             } else {
@@ -40,13 +40,38 @@ public class GenericRepository<T, ID> {
         }
     }
 
+    public final void delete(T entity) {
+        Transaction transaction = null;
+        try (Session session = sessionConnector.getMainSession().openSession()) {
+            transaction = session.beginTransaction();
+            final Object id = getEntityId(entity);
+            if (id != null)
+                session.remove(entity);
+            transaction.commit();
+        } catch (TransactionException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public final void deleteWithoutTransaction(T entity, Session session) {
+        final Object id = getEntityId(entity);
+        if (id != null)
+            session.remove(entity);
+    }
+
+    public final void deleteAllWithoutTransaction(Collection<T> entity, Session session) {
+        entity.forEach(items -> {
+            final Object id = getEntityId(items);
+            if (id != null)
+                session.remove(items);
+        });
+    }
+
     public final void saveWithoutTransaction(T entity, Session session) {
-//        try (Session session = sessionConnector.getMainSession().openSession()) {
-//
-//        } catch (TransactionException e) {
-//            e.printStackTrace();
-//        }
-        Object id = getEntityId(entity);
+        final Object id = getEntityId(entity);
         if (id == null) {
             session.persist(entity);
         } else {

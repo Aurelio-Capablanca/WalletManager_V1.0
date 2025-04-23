@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
@@ -30,8 +31,9 @@ public class ManagementBudgetsController implements Initializable {
     @FXML
     Button btnUpdate;
     @FXML
+    Button btnDelete;
+    @FXML
     Button btnCancel;
-
     @FXML
     DatePicker dpEnd;
     @FXML
@@ -49,7 +51,7 @@ public class ManagementBudgetsController implements Initializable {
     @FXML
     Label lblBalanceTotal;
     @FXML
-    ListView<WalletOrganizations> ltvEditables;
+    ListView<WalletOrganizations> ltvEditable;
 
     private final WalletBudgetLogic budgetLogic = new WalletBudgetLogic();
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
@@ -59,7 +61,7 @@ public class ManagementBudgetsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lblBalanceTotal.setText(signature.getWalletsInstance().getBalanceWallet().toString() + " $");
-        ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
+        ltvEditable.setItems(FXCollections.observableList(budgetLogic.findAll()));
         cmbCategory.setItems(FXCollections.observableList(signature.getWalletCategories()));
         cmbRepetition.setItems(FXCollections.observableList(signature.getWalletDurations()));
         txtPercentage.setDisable(true);
@@ -88,7 +90,7 @@ public class ManagementBudgetsController implements Initializable {
         });
         txtAmount.textProperty().addListener((obs, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
-                txtAmount.setText(oldValue); // block invalid input
+                txtAmount.setText(oldValue);
             }
         });
         txtAmount.focusedProperty().addListener((observable, newValue, oldValue) -> {
@@ -107,11 +109,9 @@ public class ManagementBudgetsController implements Initializable {
             WalletOrganizations orgObject = objectComposition(null);
             System.out.println("Object to save : " + orgObject);
             budgetLogic.saveBudgets(orgObject);
-            ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
-            cleanBudgetForms();
+            resetForm();
         });
-
-        ltvEditables.setCellFactory(parameters -> new ListCell<WalletOrganizations>() {
+        ltvEditable.setCellFactory(parameters -> new ListCell<WalletOrganizations>() {
             @Override
             protected void updateItem(WalletOrganizations item, boolean empty) {
                 super.updateItem(item, empty);
@@ -122,19 +122,33 @@ public class ManagementBudgetsController implements Initializable {
                 }
             }
         });
-        ltvEditables.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
+        ltvEditable.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
             System.out.println("New Value :" + newValue + " \n Old Value :" + oldValue);
             selectedValue = newValue == null ? oldValue : newValue;
             DecomposeObject(selectedValue);
         }));
+        ltvEditable.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.DELETE || keyEvent.getCode() == KeyCode.S){
+                System.out.println("Delete This Object :"+selectedValue);
+               if(selectedValue != null) {
+                   budgetLogic.deleteEntities(selectedValue);
+
+               }
+            }
+        });
         btnUpdate.setOnAction(actionEvent -> {
             System.out.println("currentSelection : " + selectedValue);
             WalletOrganizations orgObject = objectComposition(selectedValue.getIdWalletOrganization());
             System.out.println("Object to save : " + orgObject);
             budgetLogic.saveBudgets(orgObject);
-            ltvEditables.setItems(FXCollections.observableList(budgetLogic.findAll()));
-            cleanBudgetForms();
+            resetForm();
         });
+        btnDelete.setOnAction(actionEvent -> System.out.println("Please Press DELETE or S to delete the element selected from the List"));
+    }
+
+    private void resetForm(){
+        ltvEditable.setItems(FXCollections.observableList(budgetLogic.findAll()));
+        cleanBudgetForms();
     }
 
     private void cleanBudgetForms() {
@@ -148,19 +162,6 @@ public class ManagementBudgetsController implements Initializable {
     }
 
     private void DecomposeObject(WalletOrganizations item) {
-//        cmbCategory.getItems().forEach(values -> {
-//            System.out.println(signature.getWalletCategories().get(item.getIdWalletCategory()).getIdWalletCategory());
-//
-//            if (Objects.equals(values.getIdWalletCategory(), signature.getWalletCategories().get(item.getIdWalletCategory()).getIdWalletCategory())) {
-//                cmbCategory.setValue(signature.getWalletCategories().get(item.getIdWalletCategory()));
-//            }
-//        });
-//        cmbRepetition.getItems().forEach(values -> {
-//            System.out.println(signature.getWalletDurations().get(item.getIdTimeSet()).getIdDuration());
-//            if(Objects.equals(values.getIdDuration(), signature.getWalletDurations().get(item.getIdTimeSet()).getIdDuration())){
-//                cmbRepetition.setValue(signature.getWalletDurations().get(item.getIdTimeSet()));
-//            }
-//        });
         cmbCategory.getItems().stream()
                 .filter(cat -> Objects.equals(cat.getIdWalletCategory(), item.getIdWalletCategory()))
                 .findFirst()
@@ -177,23 +178,13 @@ public class ManagementBudgetsController implements Initializable {
     }
 
     private WalletOrganizations objectComposition(Integer id) {
-        Integer selectedCategory = 0;
-        Integer selectedTime = 0;
-        if (cmbCategory.getSelectionModel().getSelectedIndex() != -1)
-            selectedCategory = cmbCategory.getItems().get(cmbCategory.getSelectionModel().getSelectedIndex()).getIdWalletCategory();
-        if (cmbRepetition.getSelectionModel().getSelectedIndex() != -1)
-            selectedTime = cmbRepetition.getItems().get(cmbRepetition.getSelectionModel().getSelectedIndex()).getIdDuration();
+        Integer selectedCategory = cmbCategory.getSelectionModel().getSelectedIndex() != -1 ? cmbCategory.getItems().get(cmbCategory.getSelectionModel().getSelectedIndex()).getIdWalletCategory() : 0;
+        Integer selectedTime = cmbRepetition.getSelectionModel().getSelectedIndex() != -1 ? cmbRepetition.getItems().get(cmbRepetition.getSelectionModel().getSelectedIndex()).getIdDuration() : 0;
         return WalletOrganizations.builder()
-                .idWalletOrganization(id)
-                .organizationName(txtName.getText())
-                .budgetAssigned(new BigDecimal(txtAmount.getText()))
-                .percentageFromWallet(Double.valueOf(txtPercentage.getText()))
-                .creationOrganization(LocalDateTime.now())
-                .idTimeSet(selectedTime)
-                .idWalletCategory(selectedCategory)
+                .idWalletOrganization(id).organizationName(txtName.getText()).budgetAssigned(new BigDecimal(txtAmount.getText()))
+                .percentageFromWallet(Double.valueOf(txtPercentage.getText())).creationOrganization(LocalDateTime.now()).idTimeSet(selectedTime).idWalletCategory(selectedCategory)
                 .startDuration(dpStart.getValue() == null ? null : dpStart.getValue().atStartOfDay())
-                .endDuration(dpEnd.getValue() == null ? null : dpEnd.getValue().atStartOfDay())
-                .idWallet(signature.getWalletsInstance().getIdWallet())
+                .endDuration(dpEnd.getValue() == null ? null : dpEnd.getValue().atStartOfDay()).idWallet(signature.getWalletsInstance().getIdWallet())
                 .build();
     }
 

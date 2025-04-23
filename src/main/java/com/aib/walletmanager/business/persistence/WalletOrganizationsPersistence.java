@@ -18,4 +18,8 @@ public class WalletOrganizationsPersistence {
         return repository.findAll();
     }
 
+    public void deleteUnit(WalletOrganizations item, Session session){
+        repository.deleteWithoutTransaction(item, session);
+    }
+
 }

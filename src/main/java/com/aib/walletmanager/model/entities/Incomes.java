@@ -28,6 +28,8 @@ public class Incomes {
     @Column(name = "dateIncome")
     private LocalDateTime dateIncome;
 
+    @Column(name = "Motive")
+    private String motiveMovement;
 
     @PrePersist
     public void prePersist(){
