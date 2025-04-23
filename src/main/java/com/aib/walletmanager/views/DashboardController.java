@@ -44,6 +44,9 @@ public class DashboardController implements Initializable {
         btnManagement.setOnAction(actionEvent ->
                         UIActions.setNewStage(actionEvent, "ManagementBudgets.fxml", "Budget Management")
         );
+        btnInOut.setOnAction(actionEvent ->
+                UIActions.setNewStage(actionEvent, "IncomesOutcomes.fxml", "Incomes and Outcomes")
+        );
 
 
     }

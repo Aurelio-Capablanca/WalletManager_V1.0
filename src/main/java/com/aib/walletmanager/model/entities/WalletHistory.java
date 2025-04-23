@@ -25,6 +25,9 @@ public class WalletHistory {
     @Column(name = "balanceWallet")
     private BigDecimal balanceWallet;
 
+    @Column(name = "previousBalance")
+    private BigDecimal previousBalanceWallet;
+
     @Column(name = "amountOutcome")
     private BigDecimal amountOutcome;
 

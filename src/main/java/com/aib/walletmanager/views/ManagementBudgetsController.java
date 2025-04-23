@@ -57,7 +57,6 @@ public class ManagementBudgetsController implements Initializable {
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
     private WalletOrganizations selectedValue;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lblBalanceTotal.setText(signature.getWalletsInstance().getBalanceWallet().toString() + " $");
@@ -95,11 +94,7 @@ public class ManagementBudgetsController implements Initializable {
         });
         txtAmount.focusedProperty().addListener((observable, newValue, oldValue) -> {
             if (!newValue) {
-                // Gained focus
-                System.out.println("TextField focused!");
             } else {
-                // Lost focus
-                System.out.println("TextField lost focus!");
                 BigDecimal userBalance = signature.getWalletsInstance().getBalanceWallet();
                 BigDecimal percentage = new BigDecimal(txtAmount.getText()).divide(userBalance, 2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
                 txtPercentage.setText(percentage.toString());
@@ -107,7 +102,6 @@ public class ManagementBudgetsController implements Initializable {
         });
         btnCreate.setOnAction(actionEvent -> {
             WalletOrganizations orgObject = objectComposition(null);
-            System.out.println("Object to save : " + orgObject);
             budgetLogic.saveBudgets(orgObject);
             resetForm();
         });
@@ -123,30 +117,24 @@ public class ManagementBudgetsController implements Initializable {
             }
         });
         ltvEditable.getSelectionModel().selectedItemProperty().addListener(((observableValue, oldValue, newValue) -> {
-            System.out.println("New Value :" + newValue + " \n Old Value :" + oldValue);
             selectedValue = newValue == null ? oldValue : newValue;
             DecomposeObject(selectedValue);
         }));
         ltvEditable.setOnKeyPressed(keyEvent -> {
-            if(keyEvent.getCode() == KeyCode.DELETE || keyEvent.getCode() == KeyCode.S){
-                System.out.println("Delete This Object :"+selectedValue);
-               if(selectedValue != null) {
-                   budgetLogic.deleteEntities(selectedValue);
-
-               }
+            if (keyEvent.getCode() == KeyCode.DELETE || keyEvent.getCode() == KeyCode.S) {
+                if (selectedValue != null)
+                    budgetLogic.deleteEntities(selectedValue);
             }
         });
         btnUpdate.setOnAction(actionEvent -> {
-            System.out.println("currentSelection : " + selectedValue);
             WalletOrganizations orgObject = objectComposition(selectedValue.getIdWalletOrganization());
-            System.out.println("Object to save : " + orgObject);
             budgetLogic.saveBudgets(orgObject);
             resetForm();
         });
         btnDelete.setOnAction(actionEvent -> System.out.println("Please Press DELETE or S to delete the element selected from the List"));
     }
 
-    private void resetForm(){
+    private void resetForm() {
         ltvEditable.setItems(FXCollections.observableList(budgetLogic.findAll()));
         cleanBudgetForms();
     }
@@ -187,5 +175,4 @@ public class ManagementBudgetsController implements Initializable {
                 .endDuration(dpEnd.getValue() == null ? null : dpEnd.getValue().atStartOfDay()).idWallet(signature.getWalletsInstance().getIdWallet())
                 .build();
     }
-
 }

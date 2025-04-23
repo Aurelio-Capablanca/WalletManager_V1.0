@@ -10,6 +10,7 @@ JavaFX and implementation of Hibernate for SQL Server connection.
 -> Following
   - Do a Singleton for contain the data bucket of the logged User --Done
   - Do Dashboard Form --Done
-  - Make queries call and fill with mock data (Just SQL) --Working
-  - Do Budget Management Form and Transactional Queries --Working
+  - Make queries call and fill with mock data (Just SQL) --Done
+  - Do Budget Management Form and Transactional Queries --Done
   - Do Incomes and Outcomes and wrap on the transactions the history recording --Pending
+

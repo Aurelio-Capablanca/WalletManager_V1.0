@@ -8,7 +8,7 @@
    <children>
       <Button fx:id="btnReturn" layoutX="38.0" layoutY="33.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="98.0" text="Return" />
       <Button fx:id="btnLogout" layoutX="842.0" layoutY="29.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="107.0" text="Log Out" />
-      <TreeView fx:id="treeView" layoutX="544.0" layoutY="93.0" prefHeight="439.0" prefWidth="284.0" />
+      <TreeView fx:id="treeView" layoutX="544.0" layoutY="93.0" prefHeight="439.0" prefWidth="415.0" />
       <Label layoutX="108.0" layoutY="181.0" text="Amount">
          <font>
             <Font size="18.0" />
@@ -21,7 +21,7 @@
       </Label>
       <ComboBox fx:id="cmbCategory" layoutX="208.0" layoutY="224.0" prefWidth="150.0" />
       <TextField fx:id="txtAmount" layoutX="209.0" layoutY="182.0" />
-      <RadioButton fx:id="rdbOutcomeActivation" layoutX="218.0" layoutY="84.0" mnemonicParsing="false" text="Is Outcome" />
+      <RadioButton fx:id="rdbOutcomeActivation" layoutX="123.0" layoutY="93.0" mnemonicParsing="false" text="Is Outcome" />
       <Button fx:id="btnSave" layoutX="168.0" layoutY="460.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="82.0" text="Save" />
       <Button fx:id="btnCancel" layoutX="333.0" layoutY="460.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="82.0" text="Cancel" />
       <Label layoutX="108.0" layoutY="266.0" text="Motive">
@@ -30,5 +30,11 @@
          </font>
       </Label>
       <TextArea fx:id="txaMotive" layoutX="209.0" layoutY="258.0" prefHeight="79.0" prefWidth="150.0" />
+      <Label fx:id="lblTypeAction" layoutX="192.0" layoutY="127.0" text="{TypeAction}">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="259.0" layoutY="93.0" mnemonicParsing="false" text="apply to All Balance" />
    </children>
 </AnchorPane>

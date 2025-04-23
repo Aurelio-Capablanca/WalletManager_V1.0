@@ -1,11 +1,12 @@
 package com.aib.walletmanager.repository;
 
+import com.aib.walletmanager.model.entities.Outcomes;
 import com.aib.walletmanager.repository.generics.GenericRepository;
 
-public class OutcomesRepository extends GenericRepository<OutcomesRepository, Integer> {
+public class OutcomesRepository extends GenericRepository<Outcomes, Integer> {
 
     public OutcomesRepository(){
-        super(OutcomesRepository.class);
+        super(Outcomes.class);
     }
 
 
