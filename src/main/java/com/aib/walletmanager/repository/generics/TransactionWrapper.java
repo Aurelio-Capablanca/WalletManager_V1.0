@@ -19,6 +19,10 @@ public class TransactionWrapper {
         try (Session session = connector.getMainSession().openSession()) {
             current = session.beginTransaction();
             transactions.forEach(transaction -> {
+                if (transaction == null) {
+                    System.out.println("No Transaction to Submit here, bypassing!");
+                    return;
+                }
                 try {
                     transaction.accept(session);
                 } catch (Exception e) {

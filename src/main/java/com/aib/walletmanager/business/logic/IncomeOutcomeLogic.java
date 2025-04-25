@@ -1,20 +1,16 @@
 package com.aib.walletmanager.business.logic;
 
-import com.aib.walletmanager.business.persistence.IncomePersistence;
-import com.aib.walletmanager.business.persistence.OutcomePersistence;
-import com.aib.walletmanager.business.persistence.WalletHistoryPersistence;
-import com.aib.walletmanager.business.persistence.WalletPersistence;
+import com.aib.walletmanager.business.persistence.*;
 import com.aib.walletmanager.model.dataHolders.UserSessionSignature;
-import com.aib.walletmanager.model.entities.Incomes;
-import com.aib.walletmanager.model.entities.Outcomes;
-import com.aib.walletmanager.model.entities.WalletHistory;
-import com.aib.walletmanager.model.entities.Wallets;
+import com.aib.walletmanager.model.entities.*;
 import com.aib.walletmanager.repository.generics.TransactionWrapper;
 import org.hibernate.Session;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import java.util.function.Consumer;
 
 public class IncomeOutcomeLogic {
@@ -23,15 +19,24 @@ public class IncomeOutcomeLogic {
     private final WalletPersistence walletPersistence = new WalletPersistence();
     private final IncomePersistence incomePersistence = new IncomePersistence();
     private final OutcomePersistence outcomePersistence = new OutcomePersistence();
+    private final WalletOrganizationsPersistence orgPersistence = new WalletOrganizationsPersistence();
     private final WalletHistoryPersistence historyPersistence = new WalletHistoryPersistence();
     private final TransactionWrapper wrapper = new TransactionWrapper();
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
 
-    public void performTransactions(boolean isOutcome, Outcomes out, Incomes in) {
+    public void performTransactions(boolean isOutcome, Outcomes out, Incomes in, WalletOrganizations org) {
         final Consumer<Session> transaction = isOutcome ? session -> outcomePersistence.saveUnit(out, session) :
                 session -> incomePersistence.saveUnit(in, session);
         final Wallets wallets = signature.getWalletsInstance();
         final BigDecimal previousBalance = wallets.getBalanceWallet();
+        Consumer<Session> updateForOrganization = null;
+        BigDecimal walletNewEstimated = new BigDecimal(0);
+        if (org != null) {
+            org.setBudgetAssigned(isOutcome ? org.getBudgetAssigned().subtract(out.getOutcomeAmount()) : org.getBudgetAssigned().add(in.getAmountIncome()));
+            walletNewEstimated = isOutcome ? wallets.getBalanceWallet().subtract(org.getBudgetAssigned()) : wallets.getBalanceWallet().add(org.getBudgetAssigned());
+            org.setPercentageFromWallet(Double.valueOf(org.getBudgetAssigned().divide(walletNewEstimated, 2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100)).toPlainString()));
+            updateForOrganization = session -> orgPersistence.saveBudgetUnit(org, session);
+        }
         wallets.setBalanceWallet(isOutcome ? wallets.getBalanceWallet().subtract(out.getOutcomeAmount()) : wallets.getBalanceWallet().add(in.getAmountIncome()));
         final Consumer<Session> saveWallet = session -> walletPersistence.saveWallet(wallets, session);
         final WalletHistory historic = WalletHistory.builder()
@@ -42,7 +47,10 @@ public class IncomeOutcomeLogic {
                 .dateSpent(LocalDateTime.now())
                 .idWallet(wallets.getIdWallet())
                 .build();
-        wrapper.executeTransaction(List.of(transaction, saveWallet, session -> historyPersistence.saveHistory(historic, session)));
+        if (org != null)
+            wrapper.executeTransaction(List.of(transaction, saveWallet, updateForOrganization, session -> historyPersistence.saveHistory(historic, session)));
+        else
+            wrapper.executeTransaction(List.of(transaction, saveWallet, session -> historyPersistence.saveHistory(historic, session)));
     }
 
 }

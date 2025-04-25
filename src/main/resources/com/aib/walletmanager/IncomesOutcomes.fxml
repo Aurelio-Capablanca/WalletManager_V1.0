@@ -35,6 +35,11 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <RadioButton layoutX="259.0" layoutY="93.0" mnemonicParsing="false" text="apply to All Balance" />
+      <RadioButton fx:id="lblIsWallet" layoutX="259.0" layoutY="93.0" mnemonicParsing="false" text="apply to All Balance" />
+      <Label fx:id="lblAmountDischarge" layoutX="180.0" layoutY="357.0" text="{Amount to Discharge}">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -31,9 +31,9 @@ public class Incomes {
     @Column(name = "Motive")
     private String motiveMovement;
 
-    @PrePersist
-    public void prePersist(){
-        if(dateIncome == null)
-            dateIncome = LocalDateTime.now();
-    }
+    @Column(name = "idTypeIncome")
+    private Integer typeIncome;
+
+    @Column(name = "idWallet")
+    private Integer walletId;
 }

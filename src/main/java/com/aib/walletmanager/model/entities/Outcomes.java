@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Outcomes")
@@ -16,6 +17,8 @@ import java.math.BigDecimal;
 @ToString
 public class Outcomes {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idOutcome")
@@ -26,6 +29,9 @@ public class Outcomes {
 
     @Column(name = "OutcomeAmount")
     private BigDecimal OutcomeAmount;
+
+    @Column(name = "dateOutcome")
+    private LocalDateTime dateOutcome;
 
     @Column(name = "Motive")
     private String motiveMovement;
