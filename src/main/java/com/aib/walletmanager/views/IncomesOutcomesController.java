@@ -129,6 +129,7 @@ public class IncomesOutcomesController implements Initializable {
             Incomes in = isOutcome ? null : buildFormIncome();
             inOutLogic.performTransactions(isOutcome, out, in, currentPoint);
             walletOrg.forEach(value -> {
+                rootItem.getChildren().clear();
                 rootItem.getChildren().add(buildTreeContent(value));
             });
         });

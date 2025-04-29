@@ -2,10 +2,12 @@ package com.aib.walletmanager.repository.generics;
 
 import com.aib.walletmanager.connectorFactory.Connector;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.TransactionException;
+import org.hibernate.query.NativeQuery;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
