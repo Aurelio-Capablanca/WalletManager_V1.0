@@ -121,9 +121,12 @@ public class ManagementBudgetsController implements Initializable {
             DecomposeObject(selectedValue);
         }));
         ltvEditable.setOnKeyPressed(keyEvent -> {
+            System.out.println("Code : " + keyEvent.getCode());
             if (keyEvent.getCode() == KeyCode.DELETE || keyEvent.getCode() == KeyCode.S) {
+                System.out.println("Enters!!!!");
                 if (selectedValue != null)
                     budgetLogic.deleteEntities(selectedValue);
+                ltvEditable.setItems(FXCollections.observableList(budgetLogic.findAll()));
             }
         });
         btnUpdate.setOnAction(actionEvent -> {
