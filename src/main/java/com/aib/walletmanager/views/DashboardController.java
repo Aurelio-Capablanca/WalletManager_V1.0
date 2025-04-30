@@ -41,6 +41,18 @@ public class DashboardController implements Initializable {
                 .append(signature.getUsersInstance().getLastNameUser()).toString());
         DecimalFormat formatDecimals = new DecimalFormat("####.00");
         lblUserBalance.setText(signature.getWalletsInstance().getIdWallet() == null ? "No Data in the System" : formatDecimals.format(signature.getWalletsInstance().getBalanceWallet()));
+
+
+        // BTN LOGOUT
+
+
+        // BTN Transaction History
+        btnHistoric.setOnAction(actionEvent ->
+                        UIActions.setNewStage(actionEvent, "TransacctionHistory.fxml", "Transaction History")
+        );
+        btnManagement.setOnAction(actionEvent ->
+                UIActions.setNewStage(actionEvent, "ManagementBudgets.fxml", "Budget Management")
+        );
         btnManagement.setOnAction(actionEvent ->
                         UIActions.setNewStage(actionEvent, "ManagementBudgets.fxml", "Budget Management")
         );

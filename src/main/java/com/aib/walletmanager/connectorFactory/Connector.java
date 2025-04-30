@@ -43,7 +43,7 @@ public class Connector {
         final Configuration configuration = new Configuration();
         // Database Connection (Handled by HikariCP)
         configuration.setProperty("hibernate.connection.url", "jdbc:sqlserver://localhost;databaseName=walletManager;encrypt=false");
-        configuration.setProperty("hibernate.connection.username", "sa");
+        configuration.setProperty("hibernate.connection.username", "adminWallet");
         configuration.setProperty("hibernate.connection.password", "jklgHnbvc555SS");
         // SQL Logging and Formatting
         configuration.setProperty("hibernate.show_sql", "true");
