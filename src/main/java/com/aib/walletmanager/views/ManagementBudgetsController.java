@@ -93,8 +93,7 @@ public class ManagementBudgetsController implements Initializable {
             }
         });
         txtAmount.focusedProperty().addListener((observable, newValue, oldValue) -> {
-            if (!newValue) {
-            } else {
+            if (newValue) {
                 BigDecimal userBalance = signature.getWalletsInstance().getBalanceWallet();
                 BigDecimal percentage = new BigDecimal(txtAmount.getText()).divide(userBalance, 2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
                 txtPercentage.setText(percentage.toString());

@@ -13,7 +13,7 @@ public class UsersRepository extends GenericRepository<Users, Integer> {
     }
 
     public String findUserPassword(String emailUser){
-       final String sql = "select passUser from Users Where emailUser = :email";/*'aurel@mail.com'*/
+       final String sql = "select passUser from Users Where emailUser = :email";
         return connector.getSession().createNativeQuery(sql, String.class)
                 .setParameter("email", emailUser).getSingleResult();
     }
