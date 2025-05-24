@@ -17,7 +17,6 @@ import java.util.List;
 public class Connector {
 
     private static volatile Connector instance;
-
     public final SessionFactory mainSession;
 
     private Connector() {
