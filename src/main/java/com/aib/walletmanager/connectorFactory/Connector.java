@@ -41,7 +41,6 @@ public class Connector {
     private SessionFactory builderForSession(List<Class<?>> annotatedClasses) {
         final Configuration configuration = new Configuration();
         // Database Connection (Handled by HikariCP)
-        //jdbc:sqlserver://;serverName=walletmanager-vonedotzero.czsm6gi8476c.us-east-2.rds.amazonaws.com;databaseName=walletManager
         configuration.setProperty("hibernate.connection.url", "jdbc:sqlserver://;serverName=walletmanager-vonedotzero.czsm6gi8476c.us-east-2.rds.amazonaws.com;databaseName=walletManager;encrypt=false");
         configuration.setProperty("hibernate.connection.username", "adminWallet");
         configuration.setProperty("hibernate.connection.password", "jklgHnbvc555SS");
