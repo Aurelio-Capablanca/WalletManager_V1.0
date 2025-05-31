@@ -15,6 +15,9 @@ public class AlertResponses {
             case CONFIRMATION -> response = new Alert(Alert.AlertType.CONFIRMATION);
             default -> response = new Alert(Alert.AlertType.NONE);
         }
+        response.setTitle(title);
+        response.setHeaderText(header);
+        response.setContentText(content);
         return response;
     }
 

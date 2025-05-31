@@ -5,7 +5,6 @@ import com.aib.walletmanager.model.entities.WalletHistory;
 import com.aib.walletmanager.repository.generics.GenericRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class WalletHistoryRepository extends GenericRepository<WalletHistory, Integer> {

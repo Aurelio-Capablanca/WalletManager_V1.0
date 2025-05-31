@@ -37,7 +37,6 @@ public class LoginController implements Initializable {
             }
         });
         btnSignIn.setOnAction(actionEvent -> {
-            System.out.println("Trigger !!");
             final Boolean access = authenticationLogic.authenticateUser(txtUser.getText(), txtPass.getText());
             if (access) {
                 UIActions.setNewStage(actionEvent, "Dashboard.fxml", "Dashboard");

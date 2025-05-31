@@ -81,7 +81,6 @@ public class GenericRepository<T, ID> {
         }
     }
 
-
 //    public final void saveAll(Collection<T> collection) {
 //        Transaction transaction = null;
 //        try (Session session = sessionConnector.getMainSession().openSession()) {

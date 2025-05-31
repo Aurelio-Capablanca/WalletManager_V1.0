@@ -34,17 +34,15 @@ public class IncomeOutcomeLogic {
 
     public void performTransactions(boolean isOutcome, Outcomes out, Incomes in, WalletOrganizations org) {
         final Map<Boolean, String> validation = rules.validateIncomeOutcomeLogic(out, in, org);
-        final AtomicBoolean response = new AtomicBoolean();
-        final AtomicReference<String> message = new AtomicReference<>();
-        validation.forEach((key, value) -> {
-            response.set(key);
-            message.set(value);
-        });
-        if (!response.get()){
-            Alert alert =  AlertResponses.alertResponses(AlertTypes.ERROR, "Error at Input/Output", "", message.get());
+        Map.Entry<Boolean, String> entry = validation.entrySet().iterator().next();
+        boolean isValid = entry.getKey();
+        String message = entry.getValue();
+        if (!isValid){
+            Alert alert =  AlertResponses.alertResponses(AlertTypes.ERROR, "Error !", "Error at Input/Output", message);
             alert.show();
             return;
         }
+        //validations
         final Consumer<Session> transaction = isOutcome ? session -> outcomePersistence.saveUnit(out, session) :
                 session -> incomePersistence.saveUnit(in, session);
         final Wallets wallets = signature.getWalletsInstance();
@@ -71,6 +69,8 @@ public class IncomeOutcomeLogic {
             wrapper.executeTransaction(List.of(transaction, saveWallet, updateForOrganization, session -> historyPersistence.saveHistory(historic, session)));
         else
             wrapper.executeTransaction(List.of(transaction, saveWallet, session -> historyPersistence.saveHistory(historic, session)));
+        Alert success = AlertResponses.alertResponses(AlertTypes.CONFIRMATION, "Success", "", "Transaction made successfully");
+        success.show();
     }
 
 }
