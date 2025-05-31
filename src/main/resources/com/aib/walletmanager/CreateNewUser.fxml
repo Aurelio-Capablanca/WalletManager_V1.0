@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="419.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.CreateNewUserController">
+<AnchorPane prefHeight="400.0" prefWidth="419.0" style="-fx-background-color: #778899;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.CreateNewUserController">
    <children>
       <Button fx:id="Login" layoutX="56.0" layoutY="322.0" mnemonicParsing="false" style="-fx-background-color: skyblue;" text="Already have an account?" textFill="WHITE">
          <font>
