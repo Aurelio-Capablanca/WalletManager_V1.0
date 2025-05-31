@@ -1,9 +1,13 @@
 package com.aib.walletmanager.business.logic;
 
 import com.aib.walletmanager.business.persistence.*;
+import com.aib.walletmanager.business.rules.AlertFactory.AlertResponses;
+import com.aib.walletmanager.business.rules.AlertFactory.AlertTypes;
+import com.aib.walletmanager.business.rules.businessRules.IncomeOutcomeRules;
 import com.aib.walletmanager.model.dataHolders.UserSessionSignature;
 import com.aib.walletmanager.model.entities.*;
 import com.aib.walletmanager.repository.generics.TransactionWrapper;
+import javafx.scene.control.Alert;
 import org.hibernate.Session;
 
 import java.math.BigDecimal;
@@ -11,6 +15,9 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class IncomeOutcomeLogic {
@@ -23,8 +30,21 @@ public class IncomeOutcomeLogic {
     private final WalletHistoryPersistence historyPersistence = new WalletHistoryPersistence();
     private final TransactionWrapper wrapper = new TransactionWrapper();
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
+    private final IncomeOutcomeRules rules = new IncomeOutcomeRules();
 
     public void performTransactions(boolean isOutcome, Outcomes out, Incomes in, WalletOrganizations org) {
+        final Map<Boolean, String> validation = rules.validateIncomeOutcomeLogic(out, in, org);
+        final AtomicBoolean response = new AtomicBoolean();
+        final AtomicReference<String> message = new AtomicReference<>();
+        validation.forEach((key, value) -> {
+            response.set(key);
+            message.set(value);
+        });
+        if (!response.get()){
+            Alert alert =  AlertResponses.alertResponses(AlertTypes.ERROR, "Error at Input/Output", "", message.get());
+            alert.show();
+            return;
+        }
         final Consumer<Session> transaction = isOutcome ? session -> outcomePersistence.saveUnit(out, session) :
                 session -> incomePersistence.saveUnit(in, session);
         final Wallets wallets = signature.getWalletsInstance();
