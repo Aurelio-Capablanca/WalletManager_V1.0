@@ -50,6 +50,7 @@ public class IncomesOutcomesController implements Initializable {
     @FXML
     RadioButton lblIsWallet;
 
+
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
     private final WalletBudgetLogic budgetLogic = new WalletBudgetLogic();
     private final IncomeOutcomeLogic inOutLogic = new IncomeOutcomeLogic();
@@ -134,6 +135,7 @@ public class IncomesOutcomesController implements Initializable {
             treeView.setShowRoot(true);
             rootItem.setExpanded(true);
             rootItem.getChildren().forEach(values -> values.setExpanded(true));
+            resetForm();
         });
     }
 
@@ -165,6 +167,12 @@ public class IncomesOutcomesController implements Initializable {
                 .idCategoryOutcome(selectedCategory)
                 .idWallet(signature.getWalletsInstance().getIdWallet())
                 .build();
+    }
+
+    private void resetForm() {
+        txaMotive.setText("");
+        txtAmount.setText("");
+        lblAmountDischarge.setText("0.00 $");
     }
 
 }
