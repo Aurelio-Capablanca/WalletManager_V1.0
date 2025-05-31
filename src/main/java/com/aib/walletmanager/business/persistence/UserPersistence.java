@@ -8,13 +8,15 @@ import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 import org.hibernate.Session;
 
+import java.util.Optional;
+
 //Service
 public class UserPersistence {
 
     private final UsersRepository repository = new UsersRepository();
     private final BcryptFunction encryption = BcryptFunction.getInstance(Bcrypt.B, 12);
 
-    public String getUserPassword(String email) {
+    public Optional<String> getUserPassword(String email) {
         return repository.findUserPassword(email);
     }
 
@@ -22,7 +24,6 @@ public class UserPersistence {
         if (value.getIdUser() == null)
             value.setPassUser(Password.hash(value.getPassUser()).with(encryption).getResult());
         repository.saveUsers(value, session);
-        //repository.saveWithoutTransaction(value, session);
     }
 
     public Users getUserByEmail(String email) {

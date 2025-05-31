@@ -31,14 +31,9 @@ public class CreateNewUserController implements Initializable {
         Login.setOnAction(actionEvent -> {
             UIActions.setNewStage(actionEvent, "Login.fxml", "Login");
         });
-
         BtnSignUp.setOnAction(actionEvent -> {
             logicUser.saveUser(Users.builder().nameUser(txtFirstName.getText()).lastNameUser(txtLastName.getText()).passUser(txtPassword.getText()).
                     emailUser(txtEmail.getText()).statusUser(true).build());
         });
-
-        Users test = Users.builder().nameUser("Gabriel").lastNameUser("Lima")
-                .statusUser(true)
-                .build();
     }
 }

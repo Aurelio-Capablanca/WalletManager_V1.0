@@ -25,9 +25,7 @@ public class IncomesRepository extends GenericRepository<Incomes, Integer> {
         query.setParameter("date", income.getDateIncome());
         if (id != null) query.setParameter("id", income.getIdIncomes());
         int result = query.executeUpdate();
-        if (result == 0) {
-            throw new RuntimeException("No rows affected in income save.");
-        }
+        if (result == 0) throw new RuntimeException("No rows affected in income save.");
     }
 
 

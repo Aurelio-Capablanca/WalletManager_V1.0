@@ -7,7 +7,7 @@ import org.hibernate.query.NativeQuery;
 
 public class OutcomesRepository extends GenericRepository<Outcomes, Integer> {
 
-    public OutcomesRepository(){
+    public OutcomesRepository() {
         super(Outcomes.class);
     }
 
@@ -22,13 +22,10 @@ public class OutcomesRepository extends GenericRepository<Outcomes, Integer> {
         query.setParameter("wallet", outcome.getIdWallet());
         query.setParameter("motive", outcome.getMotiveMovement());
         query.setParameter("date", outcome.getDateOutcome());
-        if (id != null)query.setParameter("id", outcome.getIdOutcome());
+        if (id != null) query.setParameter("id", outcome.getIdOutcome());
         int result = query.executeUpdate();
-        if (result == 0) {
-            throw new RuntimeException("No rows affected in outcome save.");
-        }
+        if (result == 0) throw new RuntimeException("No rows affected in outcome save.");
     }
-
 
 
 }

@@ -63,10 +63,6 @@ public class Validator {
         return generalValidator(pattern, value, max, true);
     }
 
-    public boolean validatePhoneUSA(String value, int max) {
-        pattern = Pattern.compile("^((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$");
-        return generalValidator(pattern, value, max, false);
-    }
 
     public boolean validatePass(String value, int max) {
         pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$!%*?&/#])[A-Za-z\\d$!%*?&/#]{8,15}$");

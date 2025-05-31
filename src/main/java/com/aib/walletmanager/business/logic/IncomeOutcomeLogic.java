@@ -4,6 +4,7 @@ import com.aib.walletmanager.business.persistence.*;
 import com.aib.walletmanager.business.rules.AlertFactory.AlertResponses;
 import com.aib.walletmanager.business.rules.AlertFactory.AlertTypes;
 import com.aib.walletmanager.business.rules.businessRules.IncomeOutcomeRules;
+import com.aib.walletmanager.model.DTO.ResponseValidator;
 import com.aib.walletmanager.model.dataHolders.UserSessionSignature;
 import com.aib.walletmanager.model.entities.*;
 import com.aib.walletmanager.repository.generics.TransactionWrapper;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -33,12 +35,9 @@ public class IncomeOutcomeLogic {
     private final IncomeOutcomeRules rules = new IncomeOutcomeRules();
 
     public void performTransactions(boolean isOutcome, Outcomes out, Incomes in, WalletOrganizations org) {
-        final Map<Boolean, String> validation = rules.validateIncomeOutcomeLogic(out, in, org);
-        Map.Entry<Boolean, String> entry = validation.entrySet().iterator().next();
-        boolean isValid = entry.getKey();
-        String message = entry.getValue();
-        if (!isValid){
-            Alert alert =  AlertResponses.alertResponses(AlertTypes.ERROR, "Error !", "Error at Input/Output", message);
+        final Optional<ResponseValidator> response = rules.validateIncomeOutcomeLogic(out, in, org);
+        if (response.isPresent()){
+            Alert alert =  AlertResponses.alertResponses(AlertTypes.ERROR, "Error !", "Error at Input/Output", response.get().getMessage());
             alert.show();
             return;
         }
@@ -69,7 +68,7 @@ public class IncomeOutcomeLogic {
             wrapper.executeTransaction(List.of(transaction, saveWallet, updateForOrganization, session -> historyPersistence.saveHistory(historic, session)));
         else
             wrapper.executeTransaction(List.of(transaction, saveWallet, session -> historyPersistence.saveHistory(historic, session)));
-        Alert success = AlertResponses.alertResponses(AlertTypes.CONFIRMATION, "Success", "", "Transaction made successfully");
+        Alert success = AlertResponses.alertResponses(AlertTypes.INFORMATION, "Success", "", "Transaction made successfully");
         success.show();
     }
 
