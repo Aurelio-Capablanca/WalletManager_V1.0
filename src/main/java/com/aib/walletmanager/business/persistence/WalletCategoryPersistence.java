@@ -10,7 +10,7 @@ public class WalletCategoryPersistence {
     private final WalletCategoriesRepository repository = new WalletCategoriesRepository();
 
     public List<WalletCategories> getAll(){
-        return repository.findAll();
+        return repository.getAllCategories();
     }
 
 

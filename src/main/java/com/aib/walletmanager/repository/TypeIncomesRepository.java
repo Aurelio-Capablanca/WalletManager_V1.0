@@ -16,7 +16,7 @@ public class TypeIncomesRepository extends GenericRepository<TypeIncomes, Intege
 
     public List<TypeIncomes> findAllTypeIncomes(){
         final String sql = "exec getAllTypeIncomes";
-        return connector.getSession().createNativeQuery("", TypeIncomes.class).getResultList();
+        return connector.getSession().createNativeQuery(sql, TypeIncomes.class).getResultList();
     }
 
 }

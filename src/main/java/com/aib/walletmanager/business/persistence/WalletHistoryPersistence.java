@@ -12,7 +12,7 @@ public class WalletHistoryPersistence {
     private final WalletHistoryRepository repository = new WalletHistoryRepository();
 
     public void saveHistory(WalletHistory item, Session session){
-        repository.saveWithoutTransaction(item, session);
+        repository.saveHistoric(item, session);
     }
 
     public List<WalletHistory> searchHistoric(LocalDate from, LocalDate to){

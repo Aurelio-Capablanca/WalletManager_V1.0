@@ -108,11 +108,11 @@ public class GenericRepository<T, ID> {
 //        }
 //    }
 
-    public final List<T> findAll() {
-        try (Session session = sessionConnector.getMainSession().openSession()) {
-            return session.createQuery("from " + entity.getName(), entity).list();
-        }
-    }
+//    public final List<T> findAll() {
+//        try (Session session = sessionConnector.getMainSession().openSession()) {
+//            return session.createQuery("from " + entity.getName(), entity).list();
+//        }
+//    }
 
     public final Optional<T> findByIntegerAttribute(String attributeName, Integer value) {
         try (Session session = sessionConnector.getMainSession().openSession()) {

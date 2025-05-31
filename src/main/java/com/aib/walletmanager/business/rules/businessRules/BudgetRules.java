@@ -15,9 +15,11 @@ public class BudgetRules {
     private final UserSessionSignature signature = UserSessionSignature.getInstance(null);
 
     public Optional<ResponseValidator> validateBudgets(WalletOrganizations org) {
-        if (org.getEndDuration().isBefore(org.getStartDuration()))
-            return Optional.of(ResponseValidator.builder().state(false)
-                    .message("end date can't be before start").build());
+        if (org.getEndDuration() != null) {
+            if (org.getEndDuration().isBefore(org.getStartDuration()))
+                return Optional.of(ResponseValidator.builder().state(false)
+                        .message("end date can't be before start").build());
+        }
         if (org.getStartDuration().isBefore(LocalDateTime.now()))
             return Optional.of(ResponseValidator.builder().state(false)
                     .message("start dates ain't supported for past dates")

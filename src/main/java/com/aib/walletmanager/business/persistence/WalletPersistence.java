@@ -8,18 +8,14 @@ import java.math.BigDecimal;
 
 public class WalletPersistence {
 
-  private final WalletsRepository repository = new WalletsRepository();
+    private final WalletsRepository repository = new WalletsRepository();
 
-  public Wallets getWalletByUserId(Integer id){
-      return repository.findByIntegerAttribute("idUser",id).orElse(Wallets.builder().build());
-  }
+    public Wallets getWalletByUserId(Integer id) {
+        return repository.getWalletByUserId(id).orElse(null);
+    }
 
-//  public void updateBalances(BigDecimal amount, Integer idWallet, boolean isOutcome, Session session){
-//      repository.updateBalanceByTransaction(amount, idWallet, isOutcome, session);
-//  }
-
-  public void saveWallet(Wallets item, Session session){
-      repository.saveWithoutTransaction(item,session);
-  }
+    public void saveWallet(Wallets item, Session session) {
+        repository.saveWallets(item, session);
+    }
 
 }

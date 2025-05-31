@@ -1,6 +1,7 @@
 package com.aib.walletmanager.views;
 
 import com.aib.walletmanager.business.logic.WalletHistoryLogic;
+import com.aib.walletmanager.business.rules.UIActions;
 import com.aib.walletmanager.model.entities.WalletHistory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -43,6 +44,7 @@ public class TransactionHistoryController implements Initializable {
             }
             ltvSearched.setItems(FXCollections.observableList(historical.get()));
         });
+        btnReturn.setOnAction(actionEvent -> UIActions.setNewStage(actionEvent, "Dashboard.fxml", "Dashboard"));
         ltvSearched.setCellFactory(listView -> new ListCell<WalletHistory>() {
             @Override
             protected void updateItem(WalletHistory item, boolean empty) {
@@ -52,7 +54,7 @@ public class TransactionHistoryController implements Initializable {
                 } else {
                     DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM dd yyyy");
                     BigDecimal movedAmount = item.getAmountOutcome().compareTo(BigDecimal.ZERO) == 0 ? item.getAmountIncome() : item.getAmountOutcome();
-                    setText("Moved Amount: "+movedAmount+" Current Balance: " + item.getBalanceWallet() + " Previous: " + item.getPreviousBalanceWallet() + " Date:  " + format.format(item.getDateSpent()));
+                    setText("Moved Amount: " + movedAmount + " Current Balance: " + item.getBalanceWallet() + " Previous: " + item.getPreviousBalanceWallet() + " Date:  " + format.format(item.getDateSpent()));
                 }
             }
         });

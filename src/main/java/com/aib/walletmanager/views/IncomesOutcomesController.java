@@ -128,10 +128,12 @@ public class IncomesOutcomesController implements Initializable {
             Outcomes out = isOutcome ? buildFormOutcome() : null;
             Incomes in = isOutcome ? null : buildFormIncome();
             inOutLogic.performTransactions(isOutcome, out, in, currentPoint);
-            walletOrg.forEach(value -> {
-                rootItem.getChildren().clear();
-                rootItem.getChildren().add(buildTreeContent(value));
-            });
+            walletOrg.forEach(value -> rootItem.getChildren().clear());
+            budgetLogic.findAll().forEach(value -> rootItem.getChildren().add(buildTreeContent(value)));
+            treeView.setRoot(rootItem);
+            treeView.setShowRoot(true);
+            rootItem.setExpanded(true);
+            rootItem.getChildren().forEach(values -> values.setExpanded(true));
         });
     }
 

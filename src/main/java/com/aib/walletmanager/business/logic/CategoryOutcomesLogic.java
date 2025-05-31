@@ -10,7 +10,7 @@ public class CategoryOutcomesLogic {
     private final CategoryOutcomesRepository categoryOutcomesRepository = new CategoryOutcomesRepository();
 
     public List<CategoryOutcomes> getAll(){
-        return categoryOutcomesRepository.findAll();
+        return categoryOutcomesRepository.findAllCategories();
     }
 
 }

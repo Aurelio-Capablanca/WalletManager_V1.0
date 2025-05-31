@@ -10,6 +10,6 @@ public class TypeIncomesPersistence {
     private final TypeIncomesRepository repository = new TypeIncomesRepository();
 
     public List<TypeIncomes> getAll(){
-        return repository.findAll();
+        return repository.findAllTypeIncomes();
     }
 }

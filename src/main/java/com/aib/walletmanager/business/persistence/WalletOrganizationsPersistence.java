@@ -11,7 +11,7 @@ public class WalletOrganizationsPersistence {
     private final WalletOrganizationsRepository repository = new WalletOrganizationsRepository();
 
     public void saveBudgetUnit(WalletOrganizations item, Session session) {
-        repository.saveWithoutTransaction(item, session);
+        repository.saveWalletOrganization(item, session);
     }
 
     public List<WalletOrganizations> getAll(){
@@ -19,7 +19,7 @@ public class WalletOrganizationsPersistence {
     }
 
     public void deleteUnit(WalletOrganizations item, Session session){
-        repository.deleteWithoutTransaction(item, session);
+        repository.deleteWalletOrganization(item.getIdWalletOrganization(), session);
     }
 
 }

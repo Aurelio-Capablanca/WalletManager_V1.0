@@ -10,7 +10,7 @@ public class TypeIncomesLogic {
     private final TypeIncomesRepository typeIncomesRepository = new TypeIncomesRepository();
 
     public List<TypeIncomes> getAll(){
-        return typeIncomesRepository.findAll();
+        return typeIncomesRepository.findAllTypeIncomes();
     }
 
 }
