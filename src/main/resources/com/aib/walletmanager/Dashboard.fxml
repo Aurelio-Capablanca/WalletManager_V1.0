@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lblBalance" prefHeight="556.0" prefWidth="967.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.DashboardController">
+<AnchorPane fx:id="lblBalance" prefHeight="556.0" prefWidth="967.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aib.walletmanager.views.DashboardController">
    <children>
-      <Label graphicTextGap="7.0" layoutX="145.0" layoutY="100.0" text="Welcome : ">
+      <Label graphicTextGap="7.0" layoutX="145.0" layoutY="100.0" text="Welcome: " textFill="WHITE">
          <font>
-            <Font size="35.0" />
+            <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="lblUserName" layoutX="337.0" layoutY="100.0" text="{User Name}">
+      <Label fx:id="lblUserName" layoutX="337.0" layoutY="100.0" text="{User Name}" textFill="WHITE">
          <font>
-            <Font size="35.0" />
+            <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <Label layoutX="185.0" layoutY="161.0" text="Your Balance : ">
+      <Label layoutX="145.0" layoutY="159.0" text="Your Balance:  $" textFill="WHITE">
          <font>
-            <Font size="35.0" />
+            <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="lblUserBalance" layoutX="433.0" layoutY="161.0" text="{Your Balance}">
+      <Label fx:id="lblUserBalance" layoutX="415.0" layoutY="159.0" text="{Your Balance}" textFill="WHITE">
          <font>
-            <Font size="35.0" />
+            <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <Button fx:id="btnHistoric" layoutX="145.0" layoutY="299.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="419.0" text="Your History" />
-      <Button fx:id="btnManagement" layoutX="145.0" layoutY="350.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="419.0" text="Manage your Budget" />
-      <Button fx:id="btnInOut" layoutX="145.0" layoutY="412.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="419.0" text="Incomes and Outcomes" />
-      <Button fx:id="btnLogout" layoutX="816.0" layoutY="34.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="114.0" text="Log Out" />
+      <Button fx:id="btnHistoric" layoutX="145.0" layoutY="299.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="419.0" style="-fx-background-color: E6FD74;" text="Your History">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Button>
+      <Button fx:id="btnManagement" layoutX="145.0" layoutY="350.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="419.0" style="-fx-background-color: skyblue;" text="Manage your Budget">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Button>
+      <Button fx:id="btnInOut" layoutX="145.0" layoutY="412.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="419.0" style="-fx-background-color: lightgreen;" text="Incomes and Outcomes">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Button>
+      <Button fx:id="btnLogout" layoutX="793.0" layoutY="34.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="137.0" text="Log Out">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Button>
    </children>
 </AnchorPane>

@@ -21,6 +21,8 @@ public class LoginController implements Initializable {
     @FXML
     private Button btnSignIn;
     @FXML
+    private Button CreateNewUser;
+    @FXML
     private TextField txtUser;
     @FXML
     private PasswordField txtPass;
@@ -41,6 +43,7 @@ public class LoginController implements Initializable {
                 UIActions.setNewStage(actionEvent, "Dashboard.fxml", "Dashboard");
             }
         });
+        CreateNewUser.setOnAction(event -> UIActions.setNewStage(event, "CreateNewUser.fxml", "Create New User") );
     }
 
 }
