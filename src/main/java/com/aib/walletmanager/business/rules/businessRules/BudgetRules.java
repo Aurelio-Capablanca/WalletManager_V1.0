@@ -5,7 +5,6 @@ import com.aib.walletmanager.model.DTO.ResponseValidator;
 import com.aib.walletmanager.model.dataHolders.UserSessionSignature;
 import com.aib.walletmanager.model.entities.WalletOrganizations;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
