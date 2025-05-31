@@ -8,8 +8,8 @@ public class OutcomePersistence {
 
     private final OutcomesRepository repository = new OutcomesRepository();
 
-    public void saveUnit(Outcomes item, Session session){
-        repository.saveWithoutTransaction(item,session);
+    public void saveUnit(Outcomes item, Session session) {
+        repository.saveOutcome(item, session);
     }
 
 }

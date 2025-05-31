@@ -15,7 +15,7 @@ public class WalletOrganizationsPersistence {
     }
 
     public List<WalletOrganizations> getAll(){
-        return repository.findAll();
+        return repository.getAllOrgByWallet();
     }
 
     public void deleteUnit(WalletOrganizations item, Session session){

@@ -21,7 +21,8 @@ public class UserPersistence {
     public void saveUsers(Users value, Session session) {
         if (value.getIdUser() == null)
             value.setPassUser(Password.hash(value.getPassUser()).with(encryption).getResult());
-        repository.saveWithoutTransaction(value, session);
+        repository.saveUsers(value, session);
+        //repository.saveWithoutTransaction(value, session);
     }
 
     public Users getUserByEmail(String email) {

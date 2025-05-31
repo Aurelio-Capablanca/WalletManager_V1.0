@@ -1,16 +1,16 @@
 package com.aib.walletmanager.business.logic;
 
+import com.aib.walletmanager.business.persistence.WalletDurationsPersistence;
 import com.aib.walletmanager.model.entities.WalletDuration;
-import com.aib.walletmanager.repository.WalletDurationRepository;
 
 import java.util.List;
 
 public class WalletDurationLogic {
 
-    private final WalletDurationRepository walletDurationRepository = new WalletDurationRepository();
+    private final WalletDurationsPersistence walletDurationRepository = new WalletDurationsPersistence();
 
     public final List<WalletDuration> getAll(){
-        return walletDurationRepository.findAll();
+        return walletDurationRepository.getAll();
     }
 
 }

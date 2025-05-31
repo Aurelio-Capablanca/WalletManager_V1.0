@@ -10,7 +10,7 @@ public class WalletDurationsPersistence {
     private final WalletDurationRepository repository = new WalletDurationRepository();
 
     public List<WalletDuration> getAll(){
-        return repository.findAll();
+        return repository.findAllWalletDurations();
     }
 
 }

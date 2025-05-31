@@ -23,44 +23,40 @@ public class GenericRepository<T, ID> {
         this.entity = entity;
     }
 
-    public final void executeStoreProcedureForSaveWithoutSession(){
+//    public final void save(T entity) {
+//        Transaction transaction = null;
+//        try (Session session = sessionConnector.getMainSession().openSession()) {
+//            transaction = session.beginTransaction();
+//            final Object id = getEntityId(entity);
+//            if (id == null) {
+//                session.persist(entity);
+//            } else {
+//                session.merge(entity);
+//            }
+//            transaction.commit();
+//        } catch (TransactionException e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
+//        }
+//    }
 
-    }
-
-    public final void save(T entity) {
-        Transaction transaction = null;
-        try (Session session = sessionConnector.getMainSession().openSession()) {
-            transaction = session.beginTransaction();
-            final Object id = getEntityId(entity);
-            if (id == null) {
-                session.persist(entity);
-            } else {
-                session.merge(entity);
-            }
-            transaction.commit();
-        } catch (TransactionException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
-
-    public final void delete(T entity) {
-        Transaction transaction = null;
-        try (Session session = sessionConnector.getMainSession().openSession()) {
-            transaction = session.beginTransaction();
-            final Object id = getEntityId(entity);
-            if (id != null)
-                session.remove(entity);
-            transaction.commit();
-        } catch (TransactionException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
+//    public final void delete(T entity) {
+//        Transaction transaction = null;
+//        try (Session session = sessionConnector.getMainSession().openSession()) {
+//            transaction = session.beginTransaction();
+//            final Object id = getEntityId(entity);
+//            if (id != null)
+//                session.remove(entity);
+//            transaction.commit();
+//        } catch (TransactionException e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
+//        }
+//    }
 
     public final void deleteWithoutTransaction(T entity, Session session) {
         final Object id = getEntityId(entity);
@@ -68,13 +64,13 @@ public class GenericRepository<T, ID> {
             session.remove(entity);
     }
 
-    public final void deleteAllWithoutTransaction(Collection<T> entity, Session session) {
-        entity.forEach(items -> {
-            final Object id = getEntityId(items);
-            if (id != null)
-                session.remove(items);
-        });
-    }
+//    public final void deleteAllWithoutTransaction(Collection<T> entity, Session session) {
+//        entity.forEach(items -> {
+//            final Object id = getEntityId(items);
+//            if (id != null)
+//                session.remove(items);
+//        });
+//    }
 
     public final void saveWithoutTransaction(T entity, Session session) {
         final Object id = getEntityId(entity);
@@ -86,32 +82,32 @@ public class GenericRepository<T, ID> {
     }
 
 
-    public final void saveAll(Collection<T> collection) {
-        Transaction transaction = null;
-        try (Session session = sessionConnector.getMainSession().openSession()) {
-            transaction = session.beginTransaction();
-            int batchSize = 20;
-            int countBatches = 0;
-            for (T entity : collection) {
-                Object id = getEntityId(entity);
-                if (id == null) {
-                    session.persist(entity);
-                } else {
-                    session.merge(entity);
-                }
-                if (++countBatches % batchSize == 0) {
-                    session.flush();
-                    session.clear();
-                }
-            }
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace(); // Consider logging instead
-        }
-    }
+//    public final void saveAll(Collection<T> collection) {
+//        Transaction transaction = null;
+//        try (Session session = sessionConnector.getMainSession().openSession()) {
+//            transaction = session.beginTransaction();
+//            int batchSize = 20;
+//            int countBatches = 0;
+//            for (T entity : collection) {
+//                Object id = getEntityId(entity);
+//                if (id == null) {
+//                    session.persist(entity);
+//                } else {
+//                    session.merge(entity);
+//                }
+//                if (++countBatches % batchSize == 0) {
+//                    session.flush();
+//                    session.clear();
+//                }
+//            }
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace(); // Consider logging instead
+//        }
+//    }
 
     public final List<T> findAll() {
         try (Session session = sessionConnector.getMainSession().openSession()) {

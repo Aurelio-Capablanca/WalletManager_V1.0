@@ -4,8 +4,6 @@ import com.aib.walletmanager.connectorFactory.Connector;
 import com.aib.walletmanager.model.entities.Users;
 import com.aib.walletmanager.repository.generics.GenericRepository;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.TransactionException;
 import org.hibernate.query.NativeQuery;
 
 import java.util.Objects;
@@ -19,7 +17,7 @@ public class UsersRepository extends GenericRepository<Users, Integer> {
     }
 
     public String findUserPassword(String emailUser) {
-        final String sql = "execute findUserPassword = :email";
+        final String sql = "execute findUserPassword :email";
         return connector.getSession().createNativeQuery(sql, String.class)
                 .setParameter("email", emailUser).getSingleResult();
     }

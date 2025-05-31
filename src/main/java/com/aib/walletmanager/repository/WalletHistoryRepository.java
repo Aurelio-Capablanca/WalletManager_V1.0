@@ -16,7 +16,7 @@ public class WalletHistoryRepository extends GenericRepository<WalletHistory, In
     }
 
     public final List<WalletHistory> searchByDates(LocalDate from, LocalDate to){
-        final String sql = "select * from WalletHistory wh  where wh.dateSpent between :from And :to";
+        final String sql = "exec searchHistoryByDate @from = :from, @to = :to";
         return connector.getSession().createNativeQuery(sql,WalletHistory.class)
                 .setParameter("from",from).setParameter("to",to).list();
     }

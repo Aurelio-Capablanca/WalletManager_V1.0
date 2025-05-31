@@ -11,19 +11,18 @@ public class WalletBudgetsPersistence {
     private final WalletBudgetsRepository repository = new WalletBudgetsRepository();
 
     public void saveComposition(WalletBudgets items, Session session) {
-        repository.saveWithoutTransaction(items, session);
+        repository.saveWalletBudget(items, session);
     }
 
     public List<WalletBudgets> getRelatedToAnOrg(Integer idWallet, Integer idOrganization) {
         return repository.getRelatedToAnOrg(idWallet, idOrganization);
     }
 
-    public void delete(WalletBudgets item, Session session) {
-        repository.deleteWithoutTransaction(item, session);
-    }
-
+//    public void delete(WalletBudgets item, Session session) {
+//        repository.deleteWithoutTransaction(item, session);
+//    }
     public void deleteAll(List<WalletBudgets> items, Session session){
-        repository.deleteAllWithoutTransaction(items, session);
+        items.forEach(item-> repository.deleteWalletBudget(item.getIdBudgets(), session));
     }
 
 }

@@ -9,4 +9,6 @@ public class WalletCategoriesRepository extends GenericRepository<WalletCategori
         super(WalletCategories.class);
     }
 
+
+
 }

@@ -10,7 +10,7 @@ public class CategoryOutcomesPersistence {
     private final CategoryOutcomesRepository repository = new CategoryOutcomesRepository();
 
     public List<CategoryOutcomes> getAll(){
-        return repository.findAll();
+        return repository.findAllCategories();
     }
 
 }

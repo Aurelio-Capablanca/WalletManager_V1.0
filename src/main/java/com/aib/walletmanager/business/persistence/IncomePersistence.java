@@ -9,7 +9,7 @@ public class IncomePersistence {
     private final IncomesRepository repository = new IncomesRepository();
 
     public void saveUnit(Incomes item, Session session){
-        repository.saveWithoutTransaction(item, session);
+        repository.saveIncome(item, session);
     }
 
 }
