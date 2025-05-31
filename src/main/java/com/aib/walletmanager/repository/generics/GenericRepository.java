@@ -23,6 +23,10 @@ public class GenericRepository<T, ID> {
         this.entity = entity;
     }
 
+    public final void executeStoreProcedureForSaveWithoutSession(){
+
+    }
+
     public final void save(T entity) {
         Transaction transaction = null;
         try (Session session = sessionConnector.getMainSession().openSession()) {
@@ -115,18 +119,6 @@ public class GenericRepository<T, ID> {
         }
     }
 
-    public final Optional<T> findByStringAttribute(String attributeName, String value) {
-        try (Session session = sessionConnector.getMainSession().openSession()) {
-            T result = session.createQuery("from " + entity.getName() + " where " + attributeName + " =  :" + attributeName, entity).setParameter(attributeName, value).getSingleResult();
-            return Optional.ofNullable(result);
-
-        } catch (NoResultException e) {
-            //e.printStackTrace();
-            System.out.println("No Results Found This is not an error : " + e.getMessage());
-            return Optional.empty();
-        }
-    }
-
     public final Optional<T> findByIntegerAttribute(String attributeName, Integer value) {
         try (Session session = sessionConnector.getMainSession().openSession()) {
             T result = session.createQuery("from " + entity.getName() + " where " + attributeName + " =  :" + attributeName, entity).setParameter(attributeName, value).getSingleResult();
@@ -138,7 +130,7 @@ public class GenericRepository<T, ID> {
         }
     }
 
-    private Object getEntityId(T entity) {
+    protected Object getEntityId(T entity) {
         try {
             for (Field field : entity.getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(jakarta.persistence.Id.class)) {

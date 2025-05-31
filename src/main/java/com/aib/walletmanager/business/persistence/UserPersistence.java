@@ -14,7 +14,7 @@ public class UserPersistence {
     private final UsersRepository repository = new UsersRepository();
     private final BcryptFunction encryption = BcryptFunction.getInstance(Bcrypt.B, 12);
 
-    public String getUserPassword(String email){
+    public String getUserPassword(String email) {
         return repository.findUserPassword(email);
     }
 
@@ -24,8 +24,9 @@ public class UserPersistence {
         repository.saveWithoutTransaction(value, session);
     }
 
-    public Users getUserByEmail(String email){
-        return repository.findByStringAttribute("emailUser",email).orElse(Users.builder().build());
+    public Users getUserByEmail(String email) {
+        return repository.getUsersByEmail(email);
     }
+
 
 }
