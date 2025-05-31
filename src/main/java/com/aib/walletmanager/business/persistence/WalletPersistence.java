@@ -14,9 +14,9 @@ public class WalletPersistence {
       return repository.findByIntegerAttribute("idUser",id).orElse(Wallets.builder().build());
   }
 
-  public void updateBalances(BigDecimal amount, Integer idWallet, boolean isOutcome, Session session){
-      repository.updateBalanceByTransaction(amount, idWallet, isOutcome, session);
-  }
+//  public void updateBalances(BigDecimal amount, Integer idWallet, boolean isOutcome, Session session){
+//      repository.updateBalanceByTransaction(amount, idWallet, isOutcome, session);
+//  }
 
   public void saveWallet(Wallets item, Session session){
       repository.saveWithoutTransaction(item,session);

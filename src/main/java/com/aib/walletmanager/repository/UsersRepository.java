@@ -50,7 +50,7 @@ public class UsersRepository extends GenericRepository<Users, Integer> {
                 .setParameter("password", user.getPassUser())
                 .setParameter("status", user.getStatusUser());
         if (Objects.nonNull(id)) nativeQuery.setParameter("id", user.getIdUser());
-        final int action = nativeQuery.executeUpdate();
+        final int action = nativeQuery.getSingleResult();
         user.setIdUser(action);
         if (action == 0) throw new RuntimeException();
         session.flush();

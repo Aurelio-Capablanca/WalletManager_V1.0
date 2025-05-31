@@ -5,6 +5,7 @@ import com.aib.walletmanager.model.entities.Users;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +19,7 @@ public class CreateNewUserController implements Initializable {
     @FXML
     private TextField txtLastName;
     @FXML
-    private TextField txtPassword;
+    private PasswordField txtPassword;
     @FXML
     private TextField txtEmail;
     @FXML

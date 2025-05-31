@@ -32,8 +32,13 @@ public class TransactionWrapper {
             });
             current.commit();
         } catch (Exception e) {
-            if (current != null && current.getStatus().canRollback())
-                current.rollback();
+            if (current != null && current.getStatus().canRollback()) {
+                try {
+                    current.rollback();
+                } catch (Exception rollbackError) {
+                    System.err.println("Rollback failed: " + rollbackError.getMessage());
+                }
+            }
             throw new RuntimeException(e);
         }
     }
