@@ -21,12 +21,12 @@ public class WalletHistoryLogic {
 
 
     public List<WalletHistory> searchHistoric(LocalDate from, LocalDate to) {
-        final Optional<ResponseValidator> response = rules.validateHistoric(from, to);
-        if(response.isPresent()){
-            Alert alert =  AlertResponses.alertResponses(AlertTypes.ERROR, "Error !", "Error at Historic Transactions", response.get().getMessage());
-            alert.show();
-            return Collections.emptyList();
-        }
+//        final Optional<ResponseValidator> response = rules.validateHistoric(from, to);
+//        if(response.isPresent()){
+//            Alert alert =  AlertResponses.alertResponses(AlertTypes.ERROR, "Error !", "Error at Historic Transactions", response.get().getMessage());
+//            alert.show();
+//            return Collections.emptyList();
+//        }
         return historyPersistence.searchHistoric(from, to);
     }
 
